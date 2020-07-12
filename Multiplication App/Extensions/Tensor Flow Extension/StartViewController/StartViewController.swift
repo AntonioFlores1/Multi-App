@@ -19,6 +19,7 @@ class StartViewController: UIViewController {
     @IBOutlet weak var startButton: UIButton!
     
     let transition = TransitionAnimator()
+    
     var selectedCell = UICollectionViewCell()
     
     lazy var collectionView:UICollectionView = {
@@ -32,15 +33,17 @@ class StartViewController: UIViewController {
         return collectionView
     }()
     
+    
+    //MARK: ViewDidLoad
+    
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         CollectionViewSetUp()
         collectionView.isHidden = true
         collectionView.dataSource = self
         collectionView.delegate = self
-//        transition.dismissCompletion = {
-//            self.selectedCell.isHidden = false
-//        }
 
     }
     
@@ -77,6 +80,9 @@ class StartViewController: UIViewController {
 }
 
 
+// MARK: UICollectionViewDelegateFlowLayout
+
+
 extension StartViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -86,6 +92,8 @@ extension StartViewController: UICollectionViewDelegateFlowLayout {
     
     
 }
+
+// MARK: UICollectionViewDataSource
 
 extension StartViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -111,6 +119,8 @@ extension StartViewController: UICollectionViewDataSource {
     
     
 }
+
+// MARK: UICollectionViewDelegate
 
 extension StartViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -139,7 +149,6 @@ extension StartViewController: UIViewControllerTransitioningDelegate {
                    return transition
                }
                
-//        transition.originFrame = originFrame
         transition.presenting = false
 
 
@@ -148,3 +157,5 @@ extension StartViewController: UIViewControllerTransitioningDelegate {
     }
     
 }
+
+
