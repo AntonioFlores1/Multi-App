@@ -48,7 +48,10 @@ class MultiplicationStudyViewController: UIViewController {
             voiceSynth.speak(utterance)
         }
 
-        sayThis("I'm speaking better , now! hopefully you can figure this out")
+        for i in multiplicationTable {
+            sayThis("\(i)")
+        }
+        
         
         
     }
@@ -69,6 +72,10 @@ class MultiplicationStudyViewController: UIViewController {
             
         }
     }
+    
+//    func solveMuliTabel(proble: ){
+//        
+//    }
     
     
     @IBAction func backButton(_ sender: UIButton) {
