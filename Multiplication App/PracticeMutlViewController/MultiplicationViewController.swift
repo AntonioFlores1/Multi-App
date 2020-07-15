@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import VisionKit
-import Vision
 import Sketch
+import AudioToolbox
 
 protocol dropMenuChoiceDelegate {
     func dropMenuChoosen(tag:Int)
@@ -17,10 +16,6 @@ protocol dropMenuChoiceDelegate {
 
 class MultiplicationViewController: UIViewController,dropMenuChoiceDelegate {
     
-    
-    var textRecognitionRequest = VNRecognizeTextRequest()
-    
-    var textRecognitionRequestSecond = VNRecognizeTextRequest()
     
     private var classifier: DigitClassifier?
     
@@ -36,6 +31,12 @@ class MultiplicationViewController: UIViewController,dropMenuChoiceDelegate {
     var choiceCollectionViewCell = UICollectionViewCell()
     
     var correctAnswer:Int?
+    
+    var potentialAnswer = [String]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     var reconginzedText = "" {
         didSet {
@@ -53,15 +54,15 @@ class MultiplicationViewController: UIViewController,dropMenuChoiceDelegate {
     
     
     lazy var collectionView:UICollectionView = {
-           var layout = UICollectionViewFlowLayout()
-           let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-           collectionView.register(MultiplicationListCollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-           collectionView.backgroundColor = .clear
-           collectionView.translatesAutoresizingMaskIntoConstraints = false
-           layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
-           
-           return collectionView
-       }()
+        var layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(MultiChoiceCell.self, forCellWithReuseIdentifier: "Cell")
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        layout.sectionInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+        collectionView.backgroundColor = .clear
+        collectionView.isScrollEnabled = false
+        return collectionView
+    }()
     
     
     @IBOutlet weak var enterButton: UIButton!
@@ -86,13 +87,7 @@ class MultiplicationViewController: UIViewController,dropMenuChoiceDelegate {
         enterButton.isUserInteractionEnabled = true
         // Setup sketch view.
         
-        
-        
-        
         // Initialize a DigitClassifier instance
-        
-        
-        
         DigitClassifier.newInstance { result in
             switch result {
             case let .success(classifier):
@@ -110,6 +105,10 @@ class MultiplicationViewController: UIViewController,dropMenuChoiceDelegate {
         dropButtonSetUp()
         
         CollectionViewSetUp()
+        
+        calculateAnswer(topInput: topLabel.text, bottomInput: bottomlabel.text)
+        
+        mutipleAnswerChoices(answer: correctAnswer!)
     }
     
     
@@ -117,29 +116,47 @@ class MultiplicationViewController: UIViewController,dropMenuChoiceDelegate {
         switch tag {
         case 0:
             multiChoiceSetUp()
+            collectionView.isHidden = false
+            
             print("Here 0")
         case 1:
+            collectionView.isHidden = true
             sketchCanvasSetUp()
             print("Here 1")
             
             
         case 2:
             print("Here 2")
+            collectionView.isHidden = true
+            arSetUP()
         default:
             print("Nah")
         }
     }
     
-//    func mutipleAnswerChoices(answer:Int) -> [String]{
-//        var potentialChoices = [Int]()
-//        let randomAnswerOne = answer + 4
-//        let randomAnswertwo = answer - 3
-//        let randomAnswerThree = answer + 6
-//
-//
-//
-//        return potentialChoices
-//    }
+    func arSetUP(){
+        sketchView.isHidden = true
+        sketchView2.isHidden = true
+        enterButton.isHidden = true
+        leftBackImage.isHidden = true
+        rightBackImage.isHidden = true
+        eraserButton.isHidden = true
+    }
+    
+    func mutipleAnswerChoices(answer:Int) {
+        
+        var potentialChoices = [String]()
+        let randomAnswerOne = answer + 4
+        let randomAnswertwo = answer - 3
+        let randomAnswerThree = answer + 6
+        
+        potentialChoices.append(randomAnswerOne.description)
+        potentialChoices.append(randomAnswertwo.description)
+        potentialChoices.append(randomAnswerThree.description)
+        potentialChoices.append(answer.description)
+        
+        potentialAnswer = potentialChoices.shuffled()
+    }
     
     func multiChoiceSetUp() {
         sketchView.isHidden = true
@@ -162,12 +179,14 @@ class MultiplicationViewController: UIViewController,dropMenuChoiceDelegate {
         sketchView.lineWidth = 10//30
         sketchView.backgroundColor = UIColor.black
         sketchView.lineColor = UIColor.white
-        sketchView.sketchViewDelegate = self
+//        sketchView.sketchViewDelegate = self
         
         sketchView2.lineWidth = 10//30
         sketchView2.backgroundColor = UIColor.black
         sketchView2.lineColor = UIColor.white
-        sketchView2.sketchViewDelegate = self
+//        sketchView2.sketchViewDelegate = self
+        
+        
     }
     
     func dropButtonSetUp(){
@@ -184,46 +203,16 @@ class MultiplicationViewController: UIViewController,dropMenuChoiceDelegate {
     }
     
     
-    func MultiRandomQuestion(topInput: String?,bottomInput: String?) {
+    func calculateAnswer(topInput: String?,bottomInput: String?) {
         
-        guard let topInput = topInput, let bottomInput = bottomInput else {return}
+        guard let topInput = topInput, let bottomInput = bottomInput else {return  }
         
         let expression = NSExpression(format: "\(topInput) * \(bottomInput)")
         if let result = expression.expressionValue(with: nil, context: nil) as? NSNumber {
             
-            
-            guard let answer = Int("\(reconginzedTextSecond)\(reconginzedText)") else { print("error with your answer"); return }
-            
             correctAnswer = Int(truncating: result)
             
-            if Int(truncating: result) == answer {
-                
-                enterButton.setTitle("Correct !! Great Job", for: .normal)
-                view.backgroundColor = .systemGreen
-                sketchView.backgroundColor = .systemGreen
-                sketchView2.backgroundColor = .systemGreen
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
-                    
-                    self.view.backgroundColor = .black
-                    self.sketchView.backgroundColor = .black
-                    self.sketchView2.backgroundColor = .black
-                    self.topLabel.text = Int.random(in: 0...10).description
-                    self.bottomlabel.text = Int.random(in: 0...9).description
-                    self.enterButton.setTitle("", for: .normal)
-                }
-                
-                
-            } else {
-                enterButton.isUserInteractionEnabled = false
-                enterButton.setTitle("The Correct answer is \(result)", for: .normal)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    self.topLabel.text = Int.random(in: 0...10).description
-                    self.bottomlabel.text = Int.random(in: 0...9).description
-                    self.enterButton.setTitle("", for: .normal)
-                    
-                }
-            }
+            
             
         } else {
             print("error evaluating expression")
@@ -233,18 +222,64 @@ class MultiplicationViewController: UIViewController,dropMenuChoiceDelegate {
     }
     
     
+    func userChoiceSelected(){
+        
+    }
     
     
     @IBAction func EnterAnswer(_ sender: UIButton) {
         sender.isUserInteractionEnabled = false
         print("Your answer is")
         print("\(reconginzedTextSecond)\(reconginzedText)")
-        
-        MultiRandomQuestion(topInput: topLabel.text, bottomInput: bottomlabel.text)
+        guard let usersAnswer = Int("\(reconginzedTextSecond)\(reconginzedText)") else { print("error with your answer"); return }
+        calcUsersAnswer(result:correctAnswer!, usersAnswer: usersAnswer)
         sketchView.clear()
         sketchView2.clear()
+        calculateAnswer(topInput: topLabel.text,bottomInput: bottomlabel.text)
     }
     
+    func calcUsersAnswer(result:Int, usersAnswer:Int) {
+        
+        if result == usersAnswer {
+            enterButton.setTitle("Correct !! Great Job", for: .normal)
+            view.backgroundColor = .systemGreen
+            sketchView.backgroundColor = .systemGreen
+            sketchView2.backgroundColor = .systemGreen
+            
+            AudioServicesPlaySystemSound(1520)
+
+            AudioServicesPlaySystemSound(1109)
+
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
+                
+                self.view.backgroundColor = .black
+                self.sketchView.backgroundColor = .black
+                self.sketchView2.backgroundColor = .black
+                self.topLabel.text = Int.random(in: 0...10).description
+                self.bottomlabel.text = Int.random(in: 0...9).description
+                self.enterButton.setTitle("", for: .normal)
+                self.calculateAnswer(topInput: self.topLabel.text,bottomInput: self.bottomlabel.text)
+                
+                self.mutipleAnswerChoices(answer: self.correctAnswer!)
+            }
+            
+            
+        } else {
+            AudioServicesPlaySystemSound(1053)
+            AudioServicesPlaySystemSound(1102)
+            
+            enterButton.isUserInteractionEnabled = false
+            enterButton.setTitle("The Correct answer is \(result)", for: .normal)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self.topLabel.text = Int.random(in: 0...10).description
+                self.bottomlabel.text = Int.random(in: 0...9).description
+                self.enterButton.setTitle("", for: .normal)
+                self.calculateAnswer(topInput: self.topLabel.text,bottomInput: self.bottomlabel.text)
+                self.mutipleAnswerChoices(answer: self.correctAnswer!)
+            }
+        }
+    }
     
     
     @IBAction func clearCanvas(_ sender: UIButton) {
@@ -270,164 +305,187 @@ class MultiplicationViewController: UIViewController,dropMenuChoiceDelegate {
         
     }
     
-    func updateDrawing(image:UIImage) {
-        let handler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
-        do {
-            try handler.perform([textRecognitionRequest])
-            
-            try handler.perform([textRecognitionRequestSecond])
-            
-        } catch {
-            print(error)
-        }
-    }
+//    func updateDrawing(image:UIImage) {
+//        let handler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
+//        do {
+//            try handler.perform([textRecognitionRequest])
+//
+//            try handler.perform([textRecognitionRequestSecond])
+//
+//        } catch {
+//            print(error)
+//        }
+//    }
 }
 
 
 // MARK: Sketch Delegate
 
-extension MultiplicationViewController: SketchViewDelegate {
-    
-    func drawView(_ view: SketchView, didEndDrawUsingTool tool: AnyObject) {
-        if view == sketchView2 {
-            
-            func updateDrawing(image:UIImage) {
-                let handler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
-                do {
-                    
-                    try handler.perform([textRecognitionRequestSecond])
-                    
-                } catch {
-                    print(error)
-                }
-            }
-            
-            classifySecondDrawing()
-            
-            
-        } else if view == sketchView {
-            
-            
-            func updateDrawing(image:UIImage) {
-                let handler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
-                do {
-                    try handler.perform([textRecognitionRequest])
-                    
-                } catch {
-                    print(error)
-                }
-            }
-            
-            classifyFirstDrawing()
-            
-        }
-        
-    }
-    
-    
-    private func classifyFirstDrawing() {
-        
-        guard let classifier = self.classifier else { return }
-        // Capture drawing to RGB file.
-        UIGraphicsBeginImageContext(sketchView.frame.size)
-        
-        sketchView.layer.render(in: UIGraphicsGetCurrentContext()!)
-        
-        
-        let drawing = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext();
-        
-        
-        guard drawing != nil else {
-            print("Invalid drawing.")
-            //        resultLabel.text = "Invalid drawing."
-            return
-        }
-        
-        
-        // Run digit classifier.
-        classifier.classify(image: drawing!) { result in
-            // Show the classification result on screen.
-            switch result {
-            case let .success(classificationResult):
-                
-                let rightAnswer = classificationResult.split(separator: "\n").first
-                if let rightAnswer = rightAnswer?.last {
-                    self.reconginzedText = rightAnswer.description
-                    print(rightAnswer)
-                } else {
-                    self.reconginzedText = "Error"
-                }
-                
-                
-            case .error(_):
-                print("Failed to classify drawing.")
-                //          self.resultLabel.text = "Failed to classify drawing."
-            }
-        }
-        
-    }
-    
-    
-    
-    private func classifySecondDrawing() {
-        guard let secondClassifier = self.secondClassifier else { return }
-        // Capture drawing to RGB file.
-        UIGraphicsBeginImageContext(sketchView2.frame.size)
-        sketchView2.layer.render(in: UIGraphicsGetCurrentContext()!)
-        
-        
-        
-        let drawing = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext();
-        
-        guard drawing != nil else {
-            print("Invalid drawing.")
-            //        resultLabel.text = "Invalid drawing."
-            return
-        }
-        secondClassifier.classify(image: drawing!) { result in
-            // Show the classification result on screen.
-            switch result {
-            case let .success(classificationResult):
-                let leftAnswer = classificationResult.split(separator: "\n").first
-                
-                if let leftAnswer = leftAnswer?.last {
-                    self.reconginzedTextSecond = leftAnswer.description
-                    print(leftAnswer)
-                } else {
-                    self.reconginzedTextSecond = "Error i dont know that number"
-                }
-            case .error(_):
-                print("Failed to classify drawing.")
-                //          self.resultLabel.text = "Failed to classify drawing."
-            }
-        }
-    }
-}
+//extension MultiplicationViewController: SketchViewDelegate {
+//
+//    func drawView(_ view: SketchView, didEndDrawUsingTool tool: AnyObject) {
+//        if view == sketchView2 {
+//
+//            func updateDrawing(image:UIImage) {
+//                let handler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
+//                do {
+//
+//                    try handler.perform([textRecognitionRequestSecond])
+//
+//                } catch {
+//                    print(error)
+//                }
+//            }
+//
+//            classifySecondDrawing()
+//
+//
+//        } else if view == sketchView {
+//
+//
+//            func updateDrawing(image:UIImage) {
+//                let handler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
+//                do {
+//                    try handler.perform([textRecognitionRequest])
+//
+//                } catch {
+//                    print(error)
+//                }
+//            }
+//
+//            classifyFirstDrawing()
+//
+//        }
+//
+//    }
+//
+//
+//    private func classifyFirstDrawing() {
+//
+//        guard let classifier = self.classifier else { return }
+//        // Capture drawing to RGB file.
+//        UIGraphicsBeginImageContext(sketchView.frame.size)
+//
+//        sketchView.layer.render(in: UIGraphicsGetCurrentContext()!)
+//
+//
+//        let drawing = UIGraphicsGetImageFromCurrentImageContext()
+//        UIGraphicsEndImageContext();
+//
+//
+//        guard drawing != nil else {
+//            print("Invalid drawing.")
+//            //        resultLabel.text = "Invalid drawing."
+//            return
+//        }
+//
+//
+//        // Run digit classifier.
+//        classifier.classify(image: drawing!) { result in
+//            // Show the classification result on screen.
+//            switch result {
+//            case let .success(classificationResult):
+//
+//                let rightAnswer = classificationResult.split(separator: "\n").first
+//                if let rightAnswer = rightAnswer?.last {
+//                    self.reconginzedText = rightAnswer.description
+//                    print(rightAnswer)
+//                } else {
+//                    self.reconginzedText = "Error"
+//                }
+//
+//
+//            case .error(_):
+//                print("Failed to classify drawing.")
+//                //          self.resultLabel.text = "Failed to classify drawing."
+//            }
+//        }
+//
+//    }
+//
+//
+//
+//    private func classifySecondDrawing() {
+//        guard let secondClassifier = self.secondClassifier else { return }
+//        // Capture drawing to RGB file.
+//        UIGraphicsBeginImageContext(sketchView2.frame.size)
+//        sketchView2.layer.render(in: UIGraphicsGetCurrentContext()!)
+//
+//
+//
+//        let drawing = UIGraphicsGetImageFromCurrentImageContext()
+//        UIGraphicsEndImageContext();
+//
+//        guard drawing != nil else {
+//            print("Invalid drawing.")
+//            //        resultLabel.text = "Invalid drawing."
+//            return
+//        }
+//        secondClassifier.classify(image: drawing!) { result in
+//            // Show the classification result on screen.
+//            switch result {
+//            case let .success(classificationResult):
+//                let leftAnswer = classificationResult.split(separator: "\n").first
+//
+//                if let leftAnswer = leftAnswer?.last {
+//                    self.reconginzedTextSecond = leftAnswer.description
+//                    print(leftAnswer)
+//                } else {
+//                    self.reconginzedTextSecond = "Error i dont know that number"
+//                }
+//            case .error(_):
+//                print("Failed to classify drawing.")
+//                //          self.resultLabel.text = "Failed to classify drawing."
+//            }
+//        }
+//    }
+//}
 
 // MARK: UICollectionView setup
 
 extension MultiplicationViewController: UICollectionViewDelegateFlowLayout,UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        
+        return potentialAnswer.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        
+        guard let choiceCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? MultiChoiceCell else {return UICollectionViewCell()}
+        
+        choiceCollectionViewCell.textLabel.text = potentialAnswer[indexPath.row]
+        choiceCollectionViewCell.textLabel.textColor = .white
+        choiceCollectionViewCell.layer.masksToBounds = true
+        choiceCollectionViewCell.layer.cornerRadius = 8
+        choiceCollectionViewCell.backgroundColor = .black
+        choiceCollectionViewCell.layer.borderWidth = 3
+        choiceCollectionViewCell.layer.borderColor = UIColor.white.cgColor
+        return choiceCollectionViewCell
     }
     
-
+    
     func CollectionViewSetUp(){
         collectionView.isHidden = true
         collectionView.dataSource = self
         collectionView.delegate = self
         
         view.addSubview(collectionView)
-        collectionView.topAnchor.constraint(equalTo: bottomlabel.bottomAnchor, constant: 30).isActive = true
+        collectionView.topAnchor.constraint(equalTo: bottomlabel.bottomAnchor, constant: 50).isActive = true
         collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return CGSize(width: (view.frame.width/2.5) , height: view.frame.width/2.5)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let usersAnswer = potentialAnswer[indexPath.row]
+        
+        calcUsersAnswer(result: correctAnswer!, usersAnswer: Int(usersAnswer) ?? 0)
+        
+        
+    }
 }
