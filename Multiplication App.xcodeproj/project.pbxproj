@@ -11,6 +11,8 @@
 		A943920924BA7EC6006C0B13 /* DigitClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A943920824BA7EC6006C0B13 /* DigitClassifier.swift */; };
 		A943920D24BA7F47006C0B13 /* TensorFlowExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A943920C24BA7F47006C0B13 /* TensorFlowExt.swift */; };
 		A943921024BAA7EB006C0B13 /* mnist.tflite in Resources */ = {isa = PBXBuildFile; fileRef = A943920F24BAA7EB006C0B13 /* mnist.tflite */; };
+		A956916024BEA8FB0095B2EE /* DropDownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A956915F24BEA8FB0095B2EE /* DropDownButton.swift */; };
+		A956916224BEAAE10095B2EE /* DropDownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A956916124BEAAE10095B2EE /* DropDownView.swift */; };
 		A9584F7324B13F9000928EE1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9584F7224B13F9000928EE1 /* AppDelegate.swift */; };
 		A9584F7524B13F9000928EE1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9584F7424B13F9000928EE1 /* SceneDelegate.swift */; };
 		A9584F7724B13F9000928EE1 /* MultiplicationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9584F7624B13F9000928EE1 /* MultiplicationViewController.swift */; };
@@ -32,6 +34,8 @@
 		A943920824BA7EC6006C0B13 /* DigitClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitClassifier.swift; sourceTree = "<group>"; };
 		A943920C24BA7F47006C0B13 /* TensorFlowExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TensorFlowExt.swift; sourceTree = "<group>"; };
 		A943920F24BAA7EB006C0B13 /* mnist.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = mnist.tflite; sourceTree = "<group>"; };
+		A956915F24BEA8FB0095B2EE /* DropDownButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownButton.swift; sourceTree = "<group>"; };
+		A956916124BEAAE10095B2EE /* DropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownView.swift; sourceTree = "<group>"; };
 		A9584F6F24B13F9000928EE1 /* Multiplication App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Multiplication App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9584F7224B13F9000928EE1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A9584F7424B13F9000928EE1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +98,15 @@
 			path = UIViewExtension;
 			sourceTree = "<group>";
 		};
+		A956915E24BEA8E20095B2EE /* DropDown Menu */ = {
+			isa = PBXGroup;
+			children = (
+				A956915F24BEA8FB0095B2EE /* DropDownButton.swift */,
+				A956916124BEAAE10095B2EE /* DropDownView.swift */,
+			);
+			name = "DropDown Menu";
+			sourceTree = "<group>";
+		};
 		A9584F6624B13F9000928EE1 = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +128,7 @@
 		A9584F7124B13F9000928EE1 /* Multiplication App */ = {
 			isa = PBXGroup;
 			children = (
+				A956915E24BEA8E20095B2EE /* DropDown Menu */,
 				A943920F24BAA7EB006C0B13 /* mnist.tflite */,
 				A943920724BA7E9E006C0B13 /* Tensor Flow */,
 				A9584F9424B93C2F00928EE1 /* StudyMultViewController */,
@@ -322,6 +336,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A956916024BEA8FB0095B2EE /* DropDownButton.swift in Sources */,
+				A956916224BEAAE10095B2EE /* DropDownView.swift in Sources */,
 				A9584F8F24B8FF7600928EE1 /* TransitionAnimationCollectionViewCell.swift in Sources */,
 				A9584F7724B13F9000928EE1 /* MultiplicationViewController.swift in Sources */,
 				A943920D24BA7F47006C0B13 /* TensorFlowExt.swift in Sources */,

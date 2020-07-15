@@ -34,6 +34,11 @@ class MultiplicationViewController: UIViewController {
     }
 
     
+    var button = dropDownButton()
+    
+    
+    
+    
     //    var drawingToTextImage: UIImage!
     var SampleImage = UIImage.init(named: "maxresdefault")!
     
@@ -89,7 +94,28 @@ class MultiplicationViewController: UIViewController {
         topLabel.text = Int.random(in: 0...10).description
         bottomlabel.text = Int.random(in: 0...9).description
         
+        dropButtonSetUp()
     }
+    
+    func dropButtonSetUp(){
+        button = dropDownButton.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        button.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(button)
+        
+        button.setTitle("Menu", for: .normal)
+        
+        
+        button.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor,constant: 16).isActive = true
+        button.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 20).isActive = true
+        
+        button.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        button.dropView.dropDownOptions = ["thing 1", "thing 2"]
+        
+        
+    }
+    
     
     func MultiRandomQuestion(topInput: String?,bottomInput: String?) {
         

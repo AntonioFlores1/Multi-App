@@ -24,58 +24,77 @@ class MultiplicationStudyViewController: UIViewController {
         
         fillInLabels(multiTabel: multiplicationTable)
         
-//                let utterance = AVSpeechUtterance(string: "Hello world")
-//                utterance.voice = AVSpeechSynthesisVoice(identifier:"com.apple.ttsbundle.siri_female_en-US_compact")
-//
-//                utterance.rate = 0.3
-//                let synthesizer = AVSpeechSynthesizer()
-//
-//                synthesizer.speak(utterance)
+        //                let utterance = AVSpeechUtterance(string: "Hello world")
+        //                utterance.voice = AVSpeechSynthesisVoice(identifier:"com.apple.ttsbundle.siri_female_en-US_compact")
+        //
+        //                utterance.rate = 0.3
+        //                let synthesizer = AVSpeechSynthesizer()
+        //
+        //                synthesizer.speak(utterance)
         
+        var multiplicationToSpeech = ""
         
         let voices = AVSpeechSynthesisVoice.speechVoices()
         let voiceSynth = AVSpeechSynthesizer()
         var voiceToUse = AVSpeechSynthesisVoice(identifier:"com.apple.ttsbundle.siri_female_en-US_compact")
-//com.apple.ttsbundle.siri_female_en-US_compact
-
+        //com.apple.ttsbundle.siri_female_en-US_compact
+        
         func sayThis(_ phrase: String){
             let utterance = AVSpeechUtterance(string: phrase)
             utterance.voice = voiceToUse
-            utterance.rate = 0.4
-            utterance.pitchMultiplier = 1.4
+            utterance.rate = 0.38
+            utterance.postUtteranceDelay = 4
+            utterance.pitchMultiplier = 1.52
+            
             voiceSynth.mixToTelephonyUplink = true
-
+            
             voiceSynth.speak(utterance)
         }
-
+        
+        
         for i in multiplicationTable {
-            sayThis("\(i)")
+            let answer = solveMuliTabel(problem: i)
+            let iteration = problemTextToSpeech(problem: i, answer: answer)
+            print(i)
+            print(iteration)
+            multiplicationToSpeech += iteration
         }
         
+        print(multiplicationToSpeech)
+        sayThis(multiplicationToSpeech)
+
         
         
+        
+    }
+    
+    func problemTextToSpeech(problem:String, answer:String) -> String {
+        let expressionString = problem.replacingOccurrences(of: "x", with: "times")
+        return "\(expressionString) is \(answer); "
     }
     
     func fillInLabels(multiTabel:[String]){
         for index in 0..<multiTabel.count {
             
-            let expressionString = multiTabel[index].replacingOccurrences(of: "x", with: "*")
-            let expression = NSExpression(format: expressionString)
-            if let result = expression.expressionValue(with: nil, context: nil) as? NSNumber {
-                
-                multiplicationButton[index].setTitle("\(multiTabel[index]) = \(result)", for: .normal)
-                
-            } else {
-                print("error evaluating expression")
-            }
-            
-            
+            let answer = solveMuliTabel(problem: multiTabel[index])
+
+            multiplicationButton[index].setTitle("\(multiTabel[index]) = \(answer)", for: .normal)
         }
     }
     
-//    func solveMuliTabel(proble: ){
-//        
-//    }
+    func solveMuliTabel(problem: String) -> String {
+        
+        let expressionString = problem.replacingOccurrences(of: "x", with: "*")
+        let expression = NSExpression(format: expressionString)
+        if let result = expression.expressionValue(with: nil, context: nil) as? NSNumber {
+            
+            return result.description
+            
+        } else {
+            print("error evaluating expression")
+            return "error evaluating expression"
+        }
+    }
     
     
     @IBAction func backButton(_ sender: UIButton) {

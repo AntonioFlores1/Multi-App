@@ -126,19 +126,6 @@
                                     <constraint firstAttribute="width" constant="182" id="xDf-83-4ad"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W6h-5S-qXf">
-                                <rect key="frame" x="20" y="104" width="44" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="LJD-qh-fds"/>
-                                    <constraint firstAttribute="width" constant="44" id="npH-nh-rgY"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="chevron.down" catalog="system">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
-                                </state>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="__________________________" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ml-6P-4D5">
                                 <rect key="frame" x="11" y="464.5" width="392" height="41"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="34"/>
@@ -185,7 +172,6 @@
                             <constraint firstItem="ePH-XX-tF1" firstAttribute="top" secondItem="7ml-6P-4D5" secondAttribute="bottom" constant="46" id="43D-VW-5Te"/>
                             <constraint firstItem="wXE-nQ-7qR" firstAttribute="trailing" secondItem="7ml-6P-4D5" secondAttribute="trailing" constant="11" id="6UP-xu-9qt"/>
                             <constraint firstItem="kFu-ah-FcA" firstAttribute="leading" secondItem="wXE-nQ-7qR" secondAttribute="leading" constant="50" id="6jh-Mw-c94"/>
-                            <constraint firstItem="W6h-5S-qXf" firstAttribute="top" secondItem="wXE-nQ-7qR" secondAttribute="top" constant="16" id="7yB-SM-8yg"/>
                             <constraint firstItem="wXE-nQ-7qR" firstAttribute="trailing" secondItem="kFu-ah-FcA" secondAttribute="trailing" constant="14" id="A82-n8-A2c"/>
                             <constraint firstItem="kFu-ah-FcA" firstAttribute="top" secondItem="hLZ-Lu-hQH" secondAttribute="bottom" constant="45" id="BKO-1G-mHD"/>
                             <constraint firstItem="cue-09-ON0" firstAttribute="leading" secondItem="dWf-gH-tyP" secondAttribute="trailing" constant="219" id="Gsu-N7-eUj"/>
@@ -204,7 +190,6 @@
                             <constraint firstItem="Q87-kT-z11" firstAttribute="top" secondItem="7ml-6P-4D5" secondAttribute="bottom" constant="38" id="gXr-7i-ZHF"/>
                             <constraint firstItem="FNN-Ti-Pwe" firstAttribute="leading" secondItem="wXE-nQ-7qR" secondAttribute="leading" constant="47" id="lwE-My-W5C"/>
                             <constraint firstItem="FNN-Ti-Pwe" firstAttribute="centerX" secondItem="wXE-nQ-7qR" secondAttribute="centerX" id="oUU-dn-okn"/>
-                            <constraint firstItem="W6h-5S-qXf" firstAttribute="leading" secondItem="wXE-nQ-7qR" secondAttribute="leading" constant="20" id="qMD-1v-qWX"/>
                             <constraint firstItem="Q87-kT-z11" firstAttribute="leading" secondItem="wXE-nQ-7qR" secondAttribute="leading" constant="11" id="rkH-5I-Jya"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="wXE-nQ-7qR"/>
@@ -397,7 +382,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="chevron.down" catalog="system" width="128" height="72"/>
         <image name="eraser" width="48" height="48"/>
         <image name="gear" catalog="system" width="128" height="119"/>
         <image name="original" width="1024" height="1024"/>
