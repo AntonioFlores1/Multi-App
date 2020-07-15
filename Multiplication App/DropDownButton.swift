@@ -10,18 +10,28 @@ import Foundation
 import UIKit
 
 protocol dropDownProtocol {
-    func dropDownChoice(string:String)
+    func dropDownChoice(string:String,tag:Int)
+
 }
 
 class dropDownButton: UIButton,dropDownProtocol {
-    func dropDownChoice(string: String) {
-        self.setTitle(string, for: .normal)
+    
+  
+    
+
+    func dropDownChoice(string: String,tag:Int) {
+        print(tag)
+//        self.tag = tag
+//        self.setTitle(string, for: .normal)
+        delegate.dropMenuChoosen(tag: tag)
         dismissDropDown()
     }
     
-    
+    var delegate: dropMenuChoiceDelegate!
+
     var dropView = dropDownView()
     var height = NSLayoutConstraint()
+    
     
     override init(frame:CGRect) {
         super.init(frame:frame)
@@ -68,7 +78,6 @@ class dropDownButton: UIButton,dropDownProtocol {
             
         } else {
             
-            print("rgfsdsd")
             isOpen = false
             
             NSLayoutConstraint.deactivate([self.height])

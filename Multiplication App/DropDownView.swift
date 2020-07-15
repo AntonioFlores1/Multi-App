@@ -15,6 +15,8 @@ class dropDownView: UIView, UITableViewDelegate,UITableViewDataSource {
     
     var menuTabelView = UITableView()
     
+//    var dropButton = dropDownButton()
+    
     var delegate: dropDownProtocol!
     
     override init(frame: CGRect) {
@@ -60,8 +62,9 @@ class dropDownView: UIView, UITableViewDelegate,UITableViewDataSource {
         
         let cell = UITableViewCell()
         
-        cell.textLabel?.text = dropDownOptions[indexPath.row]
-        
+//        cell.textLabel?.text = dropDownOptions[indexPath.row]
+        cell.imageView?.image = UIImage.init(named: "\(dropDownOptions[indexPath.row])")
+        cell.imageView?.contentMode = .scaleAspectFit
         cell.backgroundColor = .darkGray
         
         return cell
@@ -69,7 +72,8 @@ class dropDownView: UIView, UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.delegate.dropDownChoice(string: dropDownOptions[indexPath.row])
-//        print(dropDownOptions[indexPath.row])
+        self.delegate.dropDownChoice(string: dropDownOptions[indexPath.row],tag:indexPath.row)
+        
+        //        print(dropDownOptions[indexPath.row])
     }
 }

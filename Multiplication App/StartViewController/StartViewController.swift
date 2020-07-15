@@ -43,9 +43,6 @@ class StartViewController: UIViewController {
 //        navigationController?.navigationBar.isHidden = true
 //        UIApplication.status
         CollectionViewSetUp()
-        collectionView.isHidden = true
-        collectionView.dataSource = self
-        collectionView.delegate = self
 
     }
     
@@ -72,6 +69,11 @@ class StartViewController: UIViewController {
     }
     
     func CollectionViewSetUp(){
+        
+        collectionView.isHidden = true
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
         view.addSubview(collectionView)
         collectionView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 0).isActive = true
         collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
