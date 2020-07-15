@@ -22,12 +22,14 @@ class MultiplicationViewController: UIViewController {
     var reconginzedText = "" {
         didSet {
             enterButton.setTitle("Enter answer as \(reconginzedTextSecond)\(reconginzedText)", for: .normal)
+            enterButton.isUserInteractionEnabled = true
         }
     }
     
     var reconginzedTextSecond = "" {
         didSet {
         enterButton.setTitle("Enter answer as \(reconginzedTextSecond)\(reconginzedText)", for: .normal)
+            enterButton.isUserInteractionEnabled = true
         }
     }
 
@@ -55,7 +57,7 @@ class MultiplicationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        enterButton.isUserInteractionEnabled = true
         // Setup sketch view.
         sketchView.lineWidth = 10//30
         sketchView.backgroundColor = UIColor.black
@@ -84,14 +86,66 @@ class MultiplicationViewController: UIViewController {
             }
         }
 
+        topLabel.text = Int.random(in: 0...10).description
+        bottomlabel.text = Int.random(in: 0...9).description
+        
+    }
+    
+    func MultiRandomQuestion(topInput: String?,bottomInput: String?) {
+        
+        guard let topInput = topInput, let bottomInput = bottomInput else {return}
+        
+        let expression = NSExpression(format: "\(topInput) * \(bottomInput)")
+        if let result = expression.expressionValue(with: nil, context: nil) as? NSNumber {
+            
+            
+            guard let answer = Int("\(reconginzedTextSecond)\(reconginzedText)") else { print("error with your answer"); return }
+            
+            if Int(truncating: result) == answer {
+                
+                enterButton.setTitle("Correct !! Great Job", for: .normal)
+                view.backgroundColor = .systemGreen
+                sketchView.backgroundColor = .systemGreen
+                sketchView2.backgroundColor = .systemGreen
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
+                    
+                    self.view.backgroundColor = .black
+                    self.sketchView.backgroundColor = .black
+                    self.sketchView2.backgroundColor = .black
+                    self.topLabel.text = Int.random(in: 0...10).description
+                    self.bottomlabel.text = Int.random(in: 0...9).description
+                    self.enterButton.setTitle("", for: .normal)
+                }
+                
+                
+            } else {
+                enterButton.isUserInteractionEnabled = false
+                enterButton.setTitle("The Correct answer is \(result)", for: .normal)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    self.topLabel.text = Int.random(in: 0...10).description
+                    self.bottomlabel.text = Int.random(in: 0...9).description
+                    self.enterButton.setTitle("", for: .normal)
+
+                }
+            }
+             
+        } else {
+            print("error evaluating expression")
+        }
+        
+        
     }
     
     
 
     
     @IBAction func EnterAnswer(_ sender: UIButton) {
+        sender.isUserInteractionEnabled = false
         print("Your answer is")
         print("\(reconginzedTextSecond)\(reconginzedText)")
+        
+        MultiRandomQuestion(topInput: topLabel.text, bottomInput: bottomlabel.text)
         sketchView.clear()
         sketchView2.clear()
     }

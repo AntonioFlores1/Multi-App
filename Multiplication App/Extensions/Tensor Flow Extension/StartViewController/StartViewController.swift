@@ -40,6 +40,8 @@ class StartViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        navigationController?.navigationBar.isHidden = true
+//        UIApplication.status
         CollectionViewSetUp()
         collectionView.isHidden = true
         collectionView.dataSource = self
