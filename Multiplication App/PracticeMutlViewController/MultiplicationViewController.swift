@@ -457,7 +457,7 @@ extension MultiplicationViewController: UICollectionViewDelegateFlowLayout,UICol
         choiceCollectionViewCell.textLabel.textColor = .white
         choiceCollectionViewCell.layer.masksToBounds = true
         choiceCollectionViewCell.layer.cornerRadius = 8
-        choiceCollectionViewCell.backgroundColor = .black
+        choiceCollectionViewCell.backgroundColor = .clear
         choiceCollectionViewCell.layer.borderWidth = 3
         choiceCollectionViewCell.layer.borderColor = UIColor.white.cgColor
         return choiceCollectionViewCell
