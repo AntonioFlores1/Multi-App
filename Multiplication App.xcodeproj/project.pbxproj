@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4DD759FD5C56F538527CCA8C /* Pods_Multiplication_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA958B0CCF317D27EDA81BF /* Pods_Multiplication_App.framework */; };
+		7F368FBC2511EF3B002E8B7D /* MultipleChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F368FBB2511EF3B002E8B7D /* MultipleChoiceView.swift */; };
+		7F368FBE2512115E002E8B7D /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F368FBD2512115E002E8B7D /* CollectionViewCell.swift */; };
 		A943920924BA7EC6006C0B13 /* DigitClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A943920824BA7EC6006C0B13 /* DigitClassifier.swift */; };
 		A943920D24BA7F47006C0B13 /* TensorFlowExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A943920C24BA7F47006C0B13 /* TensorFlowExt.swift */; };
 		A943921024BAA7EB006C0B13 /* mnist.tflite in Resources */ = {isa = PBXBuildFile; fileRef = A943920F24BAA7EB006C0B13 /* mnist.tflite */; };
@@ -30,6 +32,8 @@
 /* Begin PBXFileReference section */
 		3AA958B0CCF317D27EDA81BF /* Pods_Multiplication_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Multiplication_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59F02CDEE69EE4870CB37D11 /* Pods-Multiplication App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Multiplication App.debug.xcconfig"; path = "Target Support Files/Pods-Multiplication App/Pods-Multiplication App.debug.xcconfig"; sourceTree = "<group>"; };
+		7F368FBB2511EF3B002E8B7D /* MultipleChoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceView.swift; sourceTree = "<group>"; };
+		7F368FBD2512115E002E8B7D /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		949C29148C485AA89DC43ABC /* Pods-Multiplication App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Multiplication App.release.xcconfig"; path = "Target Support Files/Pods-Multiplication App/Pods-Multiplication App.release.xcconfig"; sourceTree = "<group>"; };
 		A943920824BA7EC6006C0B13 /* DigitClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitClassifier.swift; sourceTree = "<group>"; };
 		A943920C24BA7F47006C0B13 /* TensorFlowExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TensorFlowExt.swift; sourceTree = "<group>"; };
@@ -64,6 +68,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F368FBA2511EE75002E8B7D /* Mutiple ChoiceView */ = {
+			isa = PBXGroup;
+			children = (
+				7F368FBB2511EF3B002E8B7D /* MultipleChoiceView.swift */,
+				7F368FBD2512115E002E8B7D /* CollectionViewCell.swift */,
+			);
+			name = "Mutiple ChoiceView";
+			sourceTree = "<group>";
+		};
 		84564F54F5AF4A2C981F5C2A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				A9584F7624B13F9000928EE1 /* MultiplicationViewController.swift */,
+				7F368FBA2511EE75002E8B7D /* Mutiple ChoiceView */,
 				A9584F9724B93CA300928EE1 /* DrawingAnswerView */,
 			);
 			path = PracticeMutlViewController;
@@ -337,9 +351,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A956916024BEA8FB0095B2EE /* DropDownButton.swift in Sources */,
+				7F368FBC2511EF3B002E8B7D /* MultipleChoiceView.swift in Sources */,
 				A956916224BEAAE10095B2EE /* DropDownView.swift in Sources */,
 				A9584F8F24B8FF7600928EE1 /* TransitionAnimationCollectionViewCell.swift in Sources */,
 				A9584F7724B13F9000928EE1 /* MultiplicationViewController.swift in Sources */,
+				7F368FBE2512115E002E8B7D /* CollectionViewCell.swift in Sources */,
 				A943920D24BA7F47006C0B13 /* TensorFlowExt.swift in Sources */,
 				A9584F7324B13F9000928EE1 /* AppDelegate.swift in Sources */,
 				A9584F9124B9010A00928EE1 /* MultiplicationStudyViewController.swift in Sources */,
