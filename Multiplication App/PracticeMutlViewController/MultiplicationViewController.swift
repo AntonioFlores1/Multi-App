@@ -11,8 +11,26 @@ import VisionKit
 import Vision
 import Sketch
 
-class MultiplicationViewController: UIViewController {
-    
+
+protocol dropMenuDisplayProtocol {
+    func dropDownDisplay(tag:Int)
+}
+
+//Default answer choice is Mutiple Choice
+//
+//0 is Multiple choice
+//
+//1 is Text
+//
+//2 is Drawing
+//
+//3 is Ar
+
+
+
+
+
+class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     var textRecognitionRequest = VNRecognizeTextRequest()
     
@@ -37,8 +55,6 @@ class MultiplicationViewController: UIViewController {
     var button = dropDownButton()
     
     
-    
-    
     //    var drawingToTextImage: UIImage!
     var SampleImage = UIImage.init(named: "maxresdefault")!
     
@@ -58,7 +74,8 @@ class MultiplicationViewController: UIViewController {
     private var secondClassifier: DigitClassifier?
     
     var lastPoint = CGPoint.zero
-
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,7 +112,11 @@ class MultiplicationViewController: UIViewController {
         bottomlabel.text = Int.random(in: 0...9).description
         
         dropButtonSetUp()
+        
+        button.dropView.dropDownMenuDisplayProtocol = self
+
     }
+    
     
     func dropButtonSetUp(){
         button = dropDownButton.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
@@ -111,12 +132,27 @@ class MultiplicationViewController: UIViewController {
         button.widthAnchor.constraint(equalToConstant: 100).isActive = true
         button.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        button.dropView.dropDownOptions = ["thing 1", "thing 2"]
-        
+        button.dropView.dropDownOptions = ["Multiple", "Drawing","Text","AR"]
         
     }
     
     
+    func dropDownDisplay(tag: Int) {
+              switch tag{
+                   case 0:
+                       print("0")
+                   case 1:
+                       print("1")
+                   case 2:
+                       print("2")
+                   case 3:
+                       print("3")
+                   default:
+                       print("None")
+                   }
+       }
+    
+
     func MultiRandomQuestion(topInput: String?,bottomInput: String?) {
         
         guard let topInput = topInput, let bottomInput = bottomInput else {return}
@@ -212,6 +248,25 @@ class MultiplicationViewController: UIViewController {
             print(error)
         }
     }
+    
+    
+    func hideDrawingSetup(){
+        
+    }
+    
+    func hideMultiChoiceSetup(){
+        
+    }
+    
+    func hideARsetUp(){
+        
+    }
+    
+    func hideTextSetup(){
+        
+    }
+    
+    
 }
 
 
@@ -221,7 +276,6 @@ extension MultiplicationViewController: SketchViewDelegate {
     
     func drawView(_ view: SketchView, didEndDrawUsingTool tool: AnyObject) {
         if view == sketchView2 {
-            print("shittt")
             
             func updateDrawing(image:UIImage) {
                 let handler = VNImageRequestHandler(cgImage: image.cgImage!, options: [:])
@@ -238,7 +292,6 @@ extension MultiplicationViewController: SketchViewDelegate {
 
             
         } else if view == sketchView {
-            print("Fuckkkkk")
             
             
             func updateDrawing(image:UIImage) {

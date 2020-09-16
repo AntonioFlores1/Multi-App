@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+
+
+
 class dropDownView: UIView, UITableViewDelegate,UITableViewDataSource {
     
     var dropDownOptions = [String]()
@@ -17,17 +20,16 @@ class dropDownView: UIView, UITableViewDelegate,UITableViewDataSource {
     
     var delegate: dropDownProtocol!
     
+    var dropDownMenuDisplayProtocol: dropMenuDisplayProtocol!
+    
+     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        
-        
+
         menuTabelView.backgroundColor = .darkGray
         menuTabelView.delegate = self
         menuTabelView.dataSource = self
-        
         menuTableViewSetup()
-        
         
     }
     
@@ -52,7 +54,6 @@ class dropDownView: UIView, UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        print(dropDownOptions)
         return dropDownOptions.count
     }
     
@@ -69,7 +70,7 @@ class dropDownView: UIView, UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.delegate.dropDownChoice(string: dropDownOptions[indexPath.row])
-//        print(dropDownOptions[indexPath.row])
+        self.delegate.dropDownChoice(string: dropDownOptions[indexPath.row], tag: indexPath.row)
+        self.dropDownMenuDisplayProtocol.dropDownDisplay(tag: indexPath.row)
     }
 }
