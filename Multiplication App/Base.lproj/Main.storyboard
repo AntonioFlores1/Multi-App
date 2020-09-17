@@ -149,7 +149,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FNN-Ti-Pwe">
                                 <rect key="frame" x="2" y="673" width="410" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal">
+                                <state key="normal" title="Answer Goes here">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -182,6 +182,7 @@
                     <connections>
                         <outlet property="bottomlabel" destination="cue-09-ON0" id="ajM-2e-9eW"/>
                         <outlet property="enterButton" destination="FNN-Ti-Pwe" id="aC3-Jg-qPa"/>
+                        <outlet property="eraserButton" destination="hLZ-Lu-hQH" id="bma-cn-98C"/>
                         <outlet property="sketchView" destination="ePH-XX-tF1" id="2Cv-Ll-AEQ"/>
                         <outlet property="sketchView2" destination="ZQa-JQ-m8o" id="Jhh-RT-H0T"/>
                         <outlet property="topLabel" destination="kFu-ah-FcA" id="HYa-wh-3a5"/>

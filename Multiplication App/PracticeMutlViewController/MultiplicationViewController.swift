@@ -34,11 +34,13 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     var textRecognitionRequestSecond = VNRecognizeTextRequest()
     
     var button = dropDownButton()
-       
+    
     var multiChoiceView = MultipleChoiceView()
     
+    var textFieldView = TextChoiceView()
+    
     var multipleChoicesAnswers = [Int]()
-
+    
     var reconginzedText = "" {
         didSet {
             enterButton.setTitle("Enter answer as \(reconginzedTextSecond)\(reconginzedText)", for: .normal)
@@ -55,7 +57,6 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     var correctAnswer: Int? {
         didSet {
-            print("correctAnswer here")
             print(correctAnswer)
             multiChoiceView.multipleChoiceCollectionView.reloadData()
             multipleChoicesAnswers = multiChoiceAnswerSetup(answer: correctAnswer)
@@ -63,7 +64,6 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     }
     
     
-    //    var drawingToTextImage: UIImage!
     var SampleImage = UIImage.init(named: "maxresdefault")!
     
     @IBOutlet weak var enterButton: UIButton!
@@ -78,10 +78,13 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     @IBOutlet weak var vinculum: UILabel!
     
+    @IBOutlet weak var eraserButton: UIButton!
     
     private var classifier: DigitClassifier?
     
     private var secondClassifier: DigitClassifier?
+    
+    let displayBtn: UIBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: "Pressed")
     
     var lastPoint = CGPoint.zero
     
@@ -90,7 +93,7 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        enterButton.isUserInteractionEnabled = false
+        //        enterButton.isUserInteractionEnabled = false
         // Setup sketch view.
         sketchView.lineWidth = 30//30 .. 10
         sketchView.backgroundColor = UIColor.black
@@ -110,6 +113,13 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
         
         multiChoiceView.multipleChoiceCollectionView.dataSource = self
         multiChoiceView.multipleChoiceCollectionView.delegate = self
+        textFieldView.textField.delegate = self
+        
+        
+        textFieldView.textField.addDoneButtonToKeyboard(myAction:  #selector(textFieldDonePressed))
+        
+        
+        
         
         DigitClassifier.newInstance { result in
             switch result {
@@ -129,10 +139,22 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
         
         button.dropView.dropDownMenuDisplayProtocol = self
         multiChoiceConstraints()
+        hideMultiChoiceSetup()
         hideDrawingSetup()
-        
+        //        hideTextSetup()
+        textFieldConstraints()
         correctAnswer = correctAnswerSolution(topInput: topLabel.text, bottomInput: bottomlabel.text)
         
+        
+        let toolbar:UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0,  width: self.view.frame.size.width, height: 30))
+        //create left side empty space so that done button set on right side
+        let flexSpace = UIBarButtonItem(barButtonSystemItem:    .flexibleSpace, target: nil, action: nil)
+        let doneBtn: UIBarButtonItem = UIBarButtonItem(title: "enter", style: .done, target: self, action: #selector(textFieldDonePressed))
+        
+        toolbar.setItems([displayBtn,flexSpace, doneBtn], animated: false)
+        toolbar.sizeToFit()
+        //setting toolbar as inputAccessoryView
+        self.textFieldView.textField.inputAccessoryView = toolbar
     }
     
     
@@ -142,13 +164,29 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     func dropDownDisplay(tag: Int) {
         switch tag{
         case 0:
+            ///Multi
             hideDrawingSetup()
+            hideTextSetup()
+            showMutliChoiceSetup()
             print("0")
         case 1:
+            ///Text
+            hideMultiChoiceSetup()
+            hideDrawingSetup()
+            showTextFieldSetup()
             print("1")
         case 2:
+            ///Drawing
+            hideMultiChoiceSetup()
+            hideTextSetup()
+            showDrawingSetup()
             print("2")
+            
         case 3:
+            ///Ar
+            hideMultiChoiceSetup()
+            hideDrawingSetup()
+            hideTextSetup()
             print("3")
         default:
             print("None")
@@ -222,6 +260,7 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     
     
+    
     @IBAction func EnterAnswer(_ sender: UIButton) {
         sender.isUserInteractionEnabled = false
         print("Your answer is")
@@ -288,7 +327,35 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     }
     
     
-  
+    
+    @objc func textFieldDonePressed(){
+        print("thing")
+        if let textFieldAnswer = textFieldView.textField.text {
+            if textFieldAnswer == "" {
+                displayBtn.title = "Please put in an Answer"
+                return
+            } else {
+                if correctAnswer == Int(textFieldAnswer) {
+                    self.displayBtn.title = "Correct!!!"
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                        self.displayBtn.title = ""
+                    }
+                    correctAnswerDisplay()
+                    textFieldView.textField.text = ""
+                } else {
+                    self.displayBtn.title = "Good Try, Correct answer was \(self.correctAnswer!)"
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        self.displayBtn.title = ""
+                    }
+                    self.wrongAnswerDisplay()
+                    textFieldView.textField.text = ""
+                }
+            }
+            
+        } else {
+            textFieldView.textField.text = "Please put in an Answer"
+        }
+    }
     
     
     func correctAnswerDisplay(){
@@ -300,10 +367,10 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
             self.bottomlabel.text = Int.random(in: 0...9).description
             self.enterButton.setTitle("", for: .normal)
             self.correctAnswer = self.correctAnswerSolution(topInput: self.topLabel.text, bottomInput: self.bottomlabel.text)
-    }
+        }
         correctAnswer = correctAnswerSolution(topInput: topLabel.text, bottomInput: bottomlabel.text)
         print(correctAnswerSolution(topInput: topLabel.text, bottomInput: bottomlabel.text))
-
+        
     }
     
     func wrongAnswerDisplay(){
@@ -314,8 +381,9 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
             self.topLabel.text = Int.random(in: 0...10).description
             self.bottomlabel.text = Int.random(in: 0...9).description
             self.enterButton.setTitle("", for: .normal)
+            self.correctAnswer = self.correctAnswerSolution(topInput: self.topLabel.text, bottomInput: self.bottomlabel.text)
+            
         }
-        correctAnswer = correctAnswerSolution(topInput: topLabel.text, bottomInput: bottomlabel.text)
     }
     
     func multiChoiceConstraints(){
@@ -327,31 +395,42 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
         multiChoiceView.bottomAnchor.constraint(equalTo: enterButton.topAnchor, constant: 5).isActive = true
     }
     
+    func textFieldConstraints(){
+        view.addSubview(textFieldView)
+        textFieldView.translatesAutoresizingMaskIntoConstraints = false
+        textFieldView.topAnchor.constraint(equalTo: vinculum.bottomAnchor, constant: 0).isActive = true
+        textFieldView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14).isActive = true
+        textFieldView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -14).isActive = true
+        
+        textFieldView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1).isActive = true
+    }
+    
     func dropButtonSetUp(){
-          button = dropDownButton.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-          button.translatesAutoresizingMaskIntoConstraints = false
-          self.view.addSubview(button)
-          
-          button.setTitle("Menu", for: .normal)
-          
-          
-          button.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor,constant: 16).isActive = true
-          button.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 20).isActive = true
-          
-          button.widthAnchor.constraint(equalToConstant: 100).isActive = true
-          button.heightAnchor.constraint(equalToConstant: 40).isActive = true
-          
-          button.dropView.dropDownOptions = ["Multiple", "Drawing","Text","AR"]
-          
-      }
+        button = dropDownButton.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        button.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(button)
+        
+        button.setTitle("Menu", for: .normal)
+        
+        
+        button.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor,constant: 16).isActive = true
+        button.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 20).isActive = true
+        
+        button.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        button.dropView.dropDownOptions = ["Multiple", "Text","Drawing","AR"]
+        
+    }
     
     func hideDrawingSetup(){
         sketchView.isHidden = true
         sketchView2.isHidden = true
+        eraserButton.isHidden = true
     }
     
     func hideMultiChoiceSetup(){
-        
+        multiChoiceView.isHidden = true
     }
     
     func hideARsetUp(){
@@ -359,9 +438,28 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     }
     
     func hideTextSetup(){
-        
+        textFieldView.isHidden = true
+        textFieldView.textField.isEnabled = false
     }
     
+    
+    
+    
+    func showMutliChoiceSetup(){
+         multiChoiceView.isHidden = false
+    }
+    
+    func showTextFieldSetup(){
+        textFieldView.isHidden = false
+        textFieldView.textField.isEnabled = true
+        textFieldView.textField.becomeFirstResponder()
+    }
+    
+    func showDrawingSetup(){
+        sketchView.isHidden = false
+        sketchView2.isHidden = false
+        eraserButton.isHidden = false
+    }
     
 }
 
@@ -491,26 +589,38 @@ extension MultiplicationViewController: SketchViewDelegate {
 
 extension MultiplicationViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
-     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            return multipleChoicesAnswers.count
-        }
-        
-        
-        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            guard let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCell", for: indexPath) as? CollectionViewCell else {return UICollectionViewCell()}
-            collectionViewCell.layer.borderColor = UIColor.white.cgColor
-            collectionViewCell.layer.borderWidth = 0.5
-            collectionViewCell.textLabel.text = multipleChoicesAnswers[indexPath.row].description
-            return collectionViewCell
-        }
-        
-        func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
-            print("User tapped on item \(multipleChoicesAnswers[indexPath.row])")
-            if correctAnswer ?? 0 == multipleChoicesAnswers[indexPath.row] {
-                correctAnswerDisplay()
-            } else {
-                wrongAnswerDisplay()
-            }
-        }
-        
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return multipleChoicesAnswers.count
     }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCell", for: indexPath) as? CollectionViewCell else {return UICollectionViewCell()}
+        collectionViewCell.layer.borderColor = UIColor.white.cgColor
+        collectionViewCell.layer.borderWidth = 0.5
+        collectionViewCell.textLabel.text = multipleChoicesAnswers[indexPath.row].description
+        return collectionViewCell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+        print("User tapped on item \(multipleChoicesAnswers[indexPath.row])")
+        if correctAnswer ?? 0 == multipleChoicesAnswers[indexPath.row] {
+            correctAnswerDisplay()
+        } else {
+            wrongAnswerDisplay()
+        }
+    }
+    
+}
+
+extension MultiplicationViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else {return true}
+        if (text + string).count == 4 {
+            return false
+        } else {
+            return true
+        }
+    }
+}
