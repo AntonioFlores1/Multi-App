@@ -11,21 +11,9 @@ import VisionKit
 import Vision
 import Sketch
 
-
 protocol dropMenuDisplayProtocol {
     func dropDownDisplay(tag:Int)
 }
-
-//Default answer choice is Mutiple Choice
-//
-//0 is Multiple choice
-//
-//1 is Text
-//
-//2 is Drawing
-//
-//3 is Ar
-
 
 class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
@@ -41,16 +29,22 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     var multipleChoicesAnswers = [Int]()
     
+    var count = 0
+    
     var reconginzedText = "" {
         didSet {
-            enterButton.setTitle("Enter answer as \(reconginzedTextSecond)\(reconginzedText)", for: .normal)
+            if count == 0 {
+                enterButton.setTitle("Enter answer as \(reconginzedTextSecond)\(reconginzedText)", for: .normal)
+            }
             enterButton.isUserInteractionEnabled = true
         }
     }
     
     var reconginzedTextSecond = "" {
         didSet {
-            enterButton.setTitle("Enter answer as \(reconginzedTextSecond)\(reconginzedText)", for: .normal)
+            if count == 0 {
+                enterButton.setTitle("Enter answer as \(reconginzedTextSecond)\(reconginzedText)", for: .normal)
+            }
             enterButton.isUserInteractionEnabled = true
         }
     }
@@ -84,7 +78,7 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     private var secondClassifier: DigitClassifier?
     
-    let displayBtn: UIBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: "Pressed")
+    let displayBtn: UIBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: Selector("Pressed"))
     
     var lastPoint = CGPoint.zero
     
@@ -139,10 +133,10 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
         
         button.dropView.dropDownMenuDisplayProtocol = self
         multiChoiceConstraints()
-        hideMultiChoiceSetup()
         hideDrawingSetup()
-        //        hideTextSetup()
         textFieldConstraints()
+        hideTextSetup()
+
         correctAnswer = correctAnswerSolution(topInput: topLabel.text, bottomInput: bottomlabel.text)
         
         
@@ -150,7 +144,6 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
         //create left side empty space so that done button set on right side
         let flexSpace = UIBarButtonItem(barButtonSystemItem:    .flexibleSpace, target: nil, action: nil)
         let doneBtn: UIBarButtonItem = UIBarButtonItem(title: "enter", style: .done, target: self, action: #selector(textFieldDonePressed))
-        
         toolbar.setItems([displayBtn,flexSpace, doneBtn], animated: false)
         toolbar.sizeToFit()
         //setting toolbar as inputAccessoryView
@@ -193,13 +186,9 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
         }
     }
     
-    func nextQuestion(){
-        
-    }
     
     func correctAnswerSolution(topInput: String?,bottomInput: String?) -> Int{
         var answer = 0
-        
         guard let topInput = topInput, let bottomInput = bottomInput else {return 0}
         let expression = NSExpression(format: "\(topInput) * \(bottomInput)")
         if let result = expression.expressionValue(with: nil, context: nil) as? NSNumber {
@@ -207,54 +196,30 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
         } else {
             enterButton.setTitle("Error Calculating Contact support", for: .normal)
         }
-        
         return answer
     }
     
+    
+    
     func MultiRandomQuestion(topInput: String?,bottomInput: String?) {
-        
         guard let topInput = topInput, let bottomInput = bottomInput else {return}
-        
         let expression = NSExpression(format: "\(topInput) * \(bottomInput)")
         if let result = expression.expressionValue(with: nil, context: nil) as? NSNumber {
-            
-            
             guard let answer = Int("\(reconginzedTextSecond)\(reconginzedText)") else { print("error with your answer"); return }
-            
             if Int(truncating: result) == answer {
-                
-                enterButton.setTitle("Correct !! Great Job", for: .normal)
-                view.backgroundColor = .systemGreen
-                sketchView.backgroundColor = .systemGreen
-                sketchView2.backgroundColor = .systemGreen
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
-                    
-                    self.view.backgroundColor = .black
-                    self.sketchView.backgroundColor = .black
-                    self.sketchView2.backgroundColor = .black
-                    self.topLabel.text = Int.random(in: 0...10).description
-                    self.bottomlabel.text = Int.random(in: 0...9).description
-                    self.enterButton.setTitle("", for: .normal)
-                }
-                
-                
+                correctAnswerDisplay()
+                reconginzedText = ""
+                reconginzedTextSecond = ""
+                count = 0
             } else {
-                enterButton.isUserInteractionEnabled = false
-                enterButton.setTitle("The Correct answer is \(result)", for: .normal)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    self.topLabel.text = Int.random(in: 0...10).description
-                    self.bottomlabel.text = Int.random(in: 0...9).description
-                    self.enterButton.setTitle("", for: .normal)
-                    
-                }
+                wrongAnswerDisplay()
+                reconginzedTextSecond = ""
+                reconginzedText = ""
+                count = 0
             }
-            
         } else {
             print("error evaluating expression")
         }
-        
-        
     }
     
     
@@ -262,15 +227,13 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     
     @IBAction func EnterAnswer(_ sender: UIButton) {
-        sender.isUserInteractionEnabled = false
-        print("Your answer is")
-        print("\(reconginzedTextSecond)\(reconginzedText)")
-        
+        if reconginzedText == "" && reconginzedTextSecond == "" {
+            return
+        }
+        count = 1
         MultiRandomQuestion(topInput: topLabel.text, bottomInput: bottomlabel.text)
         sketchView.clear()
         sketchView2.clear()
-        topLabel.text = ""
-        bottomlabel.text = ""
     }
     
     
@@ -281,8 +244,6 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
             print("True")
             sketchView.drawTool = .pen
             sketchView2.drawTool = .pen
-            //            sketchView.lineWidth = 10
-            //            sketchView2.lineWidth = 10
             sender.isSelected = false
             sender.setImage(UIImage.init(named: "eraser"), for: .normal)
         } else {
@@ -361,8 +322,12 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     func correctAnswerDisplay(){
         enterButton.setTitle("Correct!! Great Job", for: .normal)
         view.backgroundColor = .systemGreen
+        sketchView.backgroundColor = UIColor.systemGreen
+        sketchView2.backgroundColor = UIColor.systemGreen
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
             self.view.backgroundColor = .black
+            self.sketchView.backgroundColor = .black
+            self.sketchView2.backgroundColor = .black
             self.topLabel.text = Int.random(in: 0...10).description
             self.bottomlabel.text = Int.random(in: 0...9).description
             self.enterButton.setTitle("", for: .normal)
@@ -374,15 +339,15 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     }
     
     func wrongAnswerDisplay(){
-        enterButton.isUserInteractionEnabled = false
+        
+        enterButton.setTitle("Good Try, Correct answer is \(self.correctAnswer!)", for: .normal)
         enterButton.isHidden = false
-        enterButton.setTitle("Good Try, Correct answer is \(correctAnswer!)", for: .normal)
+//        enterButton.isUserInteractionEnabled = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             self.topLabel.text = Int.random(in: 0...10).description
             self.bottomlabel.text = Int.random(in: 0...9).description
-            self.enterButton.setTitle("", for: .normal)
             self.correctAnswer = self.correctAnswerSolution(topInput: self.topLabel.text, bottomInput: self.bottomlabel.text)
-            
+            self.enterButton.setTitle("", for: .normal)
         }
     }
     
