@@ -12,6 +12,8 @@
 		7F368FBE2512115E002E8B7D /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F368FBD2512115E002E8B7D /* CollectionViewCell.swift */; };
 		7F368FC12512D6D8002E8B7D /* TextChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F368FC02512D6D8002E8B7D /* TextChoiceView.swift */; };
 		7F368FC52512DD14002E8B7D /* UItextField Extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F368FC42512DD14002E8B7D /* UItextField Extenstion.swift */; };
+		7F8C12832514819200E4FE93 /* ARview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8C12822514819200E4FE93 /* ARview.swift */; };
+		7F8C1288251487F800E4FE93 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8C1287251487F800E4FE93 /* ARViewController.swift */; };
 		A943920924BA7EC6006C0B13 /* DigitClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A943920824BA7EC6006C0B13 /* DigitClassifier.swift */; };
 		A943920D24BA7F47006C0B13 /* TensorFlowExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = A943920C24BA7F47006C0B13 /* TensorFlowExt.swift */; };
 		A943921024BAA7EB006C0B13 /* mnist.tflite in Resources */ = {isa = PBXBuildFile; fileRef = A943920F24BAA7EB006C0B13 /* mnist.tflite */; };
@@ -38,6 +40,8 @@
 		7F368FBD2512115E002E8B7D /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		7F368FC02512D6D8002E8B7D /* TextChoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChoiceView.swift; sourceTree = "<group>"; };
 		7F368FC42512DD14002E8B7D /* UItextField Extenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UItextField Extenstion.swift"; sourceTree = "<group>"; };
+		7F8C12822514819200E4FE93 /* ARview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARview.swift; sourceTree = "<group>"; };
+		7F8C1287251487F800E4FE93 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 		949C29148C485AA89DC43ABC /* Pods-Multiplication App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Multiplication App.release.xcconfig"; path = "Target Support Files/Pods-Multiplication App/Pods-Multiplication App.release.xcconfig"; sourceTree = "<group>"; };
 		A943920824BA7EC6006C0B13 /* DigitClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitClassifier.swift; sourceTree = "<group>"; };
 		A943920C24BA7F47006C0B13 /* TensorFlowExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TensorFlowExt.swift; sourceTree = "<group>"; };
@@ -95,6 +99,22 @@
 				7F368FC42512DD14002E8B7D /* UItextField Extenstion.swift */,
 			);
 			path = UITextField;
+			sourceTree = "<group>";
+		};
+		7F8C12812514817500E4FE93 /* AR View */ = {
+			isa = PBXGroup;
+			children = (
+				7F8C12822514819200E4FE93 /* ARview.swift */,
+			);
+			path = "AR View";
+			sourceTree = "<group>";
+		};
+		7F8C1286251487CF00E4FE93 /* AR ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7F8C1287251487F800E4FE93 /* ARViewController.swift */,
+			);
+			path = "AR ViewController";
 			sourceTree = "<group>";
 		};
 		84564F54F5AF4A2C981F5C2A /* Pods */ = {
@@ -161,6 +181,7 @@
 		A9584F7124B13F9000928EE1 /* Multiplication App */ = {
 			isa = PBXGroup;
 			children = (
+				7F8C1286251487CF00E4FE93 /* AR ViewController */,
 				A956915E24BEA8E20095B2EE /* DropDown Menu */,
 				A943920F24BAA7EB006C0B13 /* mnist.tflite */,
 				A943920724BA7E9E006C0B13 /* Tensor Flow */,
@@ -191,6 +212,7 @@
 				7F368FBF2512D682002E8B7D /* Text ChoiceView  */,
 				7F368FBA2511EE75002E8B7D /* Mutiple ChoiceView */,
 				A9584F9724B93CA300928EE1 /* DrawingAnswerView */,
+				7F8C12812514817500E4FE93 /* AR View */,
 			);
 			path = PracticeMutlViewController;
 			sourceTree = "<group>";
@@ -379,12 +401,14 @@
 				A9584F7724B13F9000928EE1 /* MultiplicationViewController.swift in Sources */,
 				7F368FBE2512115E002E8B7D /* CollectionViewCell.swift in Sources */,
 				A943920D24BA7F47006C0B13 /* TensorFlowExt.swift in Sources */,
+				7F8C12832514819200E4FE93 /* ARview.swift in Sources */,
 				A9584F7324B13F9000928EE1 /* AppDelegate.swift in Sources */,
 				A9584F9124B9010A00928EE1 /* MultiplicationStudyViewController.swift in Sources */,
 				A9584F8724B1599500928EE1 /* CanvasView.swift in Sources */,
 				7F368FC12512D6D8002E8B7D /* TextChoiceView.swift in Sources */,
 				A9584F7524B13F9000928EE1 /* SceneDelegate.swift in Sources */,
 				A943920924BA7EC6006C0B13 /* DigitClassifier.swift in Sources */,
+				7F8C1288251487F800E4FE93 /* ARViewController.swift in Sources */,
 				A9584F8924B17F5D00928EE1 /* UiView Extensions .swift in Sources */,
 				A9584F8B24B8507600928EE1 /* StartViewController.swift in Sources */,
 				7F368FC52512DD14002E8B7D /* UItextField Extenstion.swift in Sources */,

@@ -15,6 +15,7 @@ protocol dropMenuDisplayProtocol {
     func dropDownDisplay(tag:Int)
 }
 
+
 class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     var textRecognitionRequest = VNRecognizeTextRequest()
@@ -26,7 +27,7 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     var multiChoiceView = MultipleChoiceView()
     
     var textFieldView = TextChoiceView()
-    
+        
     var multipleChoicesAnswers = [Int]()
     
     var count = 0
@@ -80,7 +81,6 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     let displayBtn: UIBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: Selector("Pressed"))
     
-    var lastPoint = CGPoint.zero
     
     
     
@@ -136,7 +136,6 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
         hideDrawingSetup()
         textFieldConstraints()
         hideTextSetup()
-
         correctAnswer = correctAnswerSolution(topInput: topLabel.text, bottomInput: bottomlabel.text)
         
         
@@ -152,7 +151,9 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     
     
-    
+    func initalCorrectAnswerSolution(topInput: Int?, bottomInput: Int?) {
+        correctAnswerSolution(topInput: topInput?.description, bottomInput: bottomInput?.description)
+    }
     
     func dropDownDisplay(tag: Int) {
         switch tag{
@@ -177,9 +178,11 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
             
         case 3:
             ///Ar
-            hideMultiChoiceSetup()
-            hideDrawingSetup()
-            hideTextSetup()
+            let ARviewcontroller = ARViewController()
+            navigationController?.pushViewController(ARviewcontroller,animated: false)
+            ARviewcontroller.topNumber = Int(topLabel.text!)
+            ARviewcontroller.bottomNumber = Int(bottomlabel.text!)
+               
             print("3")
         default:
             print("None")
@@ -351,6 +354,13 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
         }
     }
     
+    
+    
+    func initalCorrectAnswerSolution(topInput:Int? , bottomInput: Int?) -> Int {
+       return correctAnswerSolution(topInput: topInput?.description, bottomInput: bottomlabel.debugDescription)
+    }
+    
+    
     func multiChoiceConstraints(){
         view.addSubview(multiChoiceView)
         multiChoiceView.translatesAutoresizingMaskIntoConstraints = false
@@ -398,16 +408,10 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
         multiChoiceView.isHidden = true
     }
     
-    func hideARsetUp(){
-        
-    }
-    
     func hideTextSetup(){
         textFieldView.isHidden = true
         textFieldView.textField.isEnabled = false
     }
-    
-    
     
     
     func showMutliChoiceSetup(){
@@ -424,7 +428,7 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
         sketchView.isHidden = false
         sketchView2.isHidden = false
         eraserButton.isHidden = false
-    }
+    }    
     
 }
 
