@@ -9,5 +9,5 @@ target 'Multiplication App' do
 
   pod 'Sketch'
   pod 'TensorFlowLiteSwift' 
-
+  pod 'OSSSpeechKit'
 end
