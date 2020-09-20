@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4DD759FD5C56F538527CCA8C /* Pods_Multiplication_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA958B0CCF317D27EDA81BF /* Pods_Multiplication_App.framework */; };
 		7F368FBC2511EF3B002E8B7D /* MultipleChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F368FBB2511EF3B002E8B7D /* MultipleChoiceView.swift */; };
 		7F368FBE2512115E002E8B7D /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F368FBD2512115E002E8B7D /* CollectionViewCell.swift */; };
 		7F368FC12512D6D8002E8B7D /* TextChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F368FC02512D6D8002E8B7D /* TextChoiceView.swift */; };
@@ -31,18 +30,17 @@
 		A9584F8D24B852BE00928EE1 /* MultiplicationListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9584F8C24B852BE00928EE1 /* MultiplicationListCollectionViewCell.swift */; };
 		A9584F8F24B8FF7600928EE1 /* TransitionAnimationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9584F8E24B8FF7500928EE1 /* TransitionAnimationCollectionViewCell.swift */; };
 		A9584F9124B9010A00928EE1 /* MultiplicationStudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9584F9024B9010A00928EE1 /* MultiplicationStudyViewController.swift */; };
+		DA8E25CF52218AF7E5B64A49 /* Pods_Multiplication_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9D2ED127F35562992B193D6 /* Pods_Multiplication_App.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3AA958B0CCF317D27EDA81BF /* Pods_Multiplication_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Multiplication_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		59F02CDEE69EE4870CB37D11 /* Pods-Multiplication App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Multiplication App.debug.xcconfig"; path = "Target Support Files/Pods-Multiplication App/Pods-Multiplication App.debug.xcconfig"; sourceTree = "<group>"; };
 		7F368FBB2511EF3B002E8B7D /* MultipleChoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceView.swift; sourceTree = "<group>"; };
 		7F368FBD2512115E002E8B7D /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		7F368FC02512D6D8002E8B7D /* TextChoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChoiceView.swift; sourceTree = "<group>"; };
 		7F368FC42512DD14002E8B7D /* UItextField Extenstion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UItextField Extenstion.swift"; sourceTree = "<group>"; };
 		7F8C12822514819200E4FE93 /* ARview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARview.swift; sourceTree = "<group>"; };
 		7F8C1287251487F800E4FE93 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
-		949C29148C485AA89DC43ABC /* Pods-Multiplication App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Multiplication App.release.xcconfig"; path = "Target Support Files/Pods-Multiplication App/Pods-Multiplication App.release.xcconfig"; sourceTree = "<group>"; };
+		934037D13309AC82D5131316 /* Pods-Multiplication App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Multiplication App.release.xcconfig"; path = "Target Support Files/Pods-Multiplication App/Pods-Multiplication App.release.xcconfig"; sourceTree = "<group>"; };
 		A943920824BA7EC6006C0B13 /* DigitClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitClassifier.swift; sourceTree = "<group>"; };
 		A943920C24BA7F47006C0B13 /* TensorFlowExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TensorFlowExt.swift; sourceTree = "<group>"; };
 		A943920F24BAA7EB006C0B13 /* mnist.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; path = mnist.tflite; sourceTree = "<group>"; };
@@ -62,6 +60,8 @@
 		A9584F8C24B852BE00928EE1 /* MultiplicationListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplicationListCollectionViewCell.swift; sourceTree = "<group>"; };
 		A9584F8E24B8FF7500928EE1 /* TransitionAnimationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionAnimationCollectionViewCell.swift; sourceTree = "<group>"; };
 		A9584F9024B9010A00928EE1 /* MultiplicationStudyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplicationStudyViewController.swift; sourceTree = "<group>"; };
+		A9D2ED127F35562992B193D6 /* Pods_Multiplication_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Multiplication_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD3467182B52E774DD311FFF /* Pods-Multiplication App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Multiplication App.debug.xcconfig"; path = "Target Support Files/Pods-Multiplication App/Pods-Multiplication App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,13 +69,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DD759FD5C56F538527CCA8C /* Pods_Multiplication_App.framework in Frameworks */,
+				DA8E25CF52218AF7E5B64A49 /* Pods_Multiplication_App.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7B22F0319B8452F98B2280D6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A9D2ED127F35562992B193D6 /* Pods_Multiplication_App.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7F368FBA2511EE75002E8B7D /* Mutiple ChoiceView */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,8 +128,8 @@
 		84564F54F5AF4A2C981F5C2A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				59F02CDEE69EE4870CB37D11 /* Pods-Multiplication App.debug.xcconfig */,
-				949C29148C485AA89DC43ABC /* Pods-Multiplication App.release.xcconfig */,
+				DD3467182B52E774DD311FFF /* Pods-Multiplication App.debug.xcconfig */,
+				934037D13309AC82D5131316 /* Pods-Multiplication App.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -166,7 +174,7 @@
 				A9584F7124B13F9000928EE1 /* Multiplication App */,
 				A9584F7024B13F9000928EE1 /* Products */,
 				84564F54F5AF4A2C981F5C2A /* Pods */,
-				D9A4F3C5B73975F2D7467608 /* Frameworks */,
+				7B22F0319B8452F98B2280D6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -270,14 +278,6 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
-		D9A4F3C5B73975F2D7467608 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				3AA958B0CCF317D27EDA81BF /* Pods_Multiplication_App.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -285,11 +285,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A9584F8324B13F9100928EE1 /* Build configuration list for PBXNativeTarget "Multiplication App" */;
 			buildPhases = (
-				7D9E8D80CABCC590BC3B2830 /* [CP] Check Pods Manifest.lock */,
+				A9D2E3D93FF1401B926166D2 /* [CP] Check Pods Manifest.lock */,
 				A9584F6B24B13F9000928EE1 /* Sources */,
 				A9584F6C24B13F9000928EE1 /* Frameworks */,
 				A9584F6D24B13F9000928EE1 /* Resources */,
-				E339037B2A41B8AE92B61340 /* [CP] Embed Pods Frameworks */,
+				10B5567C300669C12C6F14B9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -348,7 +348,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7D9E8D80CABCC590BC3B2830 /* [CP] Check Pods Manifest.lock */ = {
+		10B5567C300669C12C6F14B9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Multiplication App/Pods-Multiplication App-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Multiplication App/Pods-Multiplication App-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Multiplication App/Pods-Multiplication App-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A9D2E3D93FF1401B926166D2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -368,23 +385,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E339037B2A41B8AE92B61340 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Multiplication App/Pods-Multiplication App-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Multiplication App/Pods-Multiplication App-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Multiplication App/Pods-Multiplication App-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -554,7 +554,7 @@
 		};
 		A9584F8424B13F9100928EE1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 59F02CDEE69EE4870CB37D11 /* Pods-Multiplication App.debug.xcconfig */;
+			baseConfigurationReference = DD3467182B52E774DD311FFF /* Pods-Multiplication App.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -573,7 +573,7 @@
 		};
 		A9584F8524B13F9100928EE1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 949C29148C485AA89DC43ABC /* Pods-Multiplication App.release.xcconfig */;
+			baseConfigurationReference = 934037D13309AC82D5131316 /* Pods-Multiplication App.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

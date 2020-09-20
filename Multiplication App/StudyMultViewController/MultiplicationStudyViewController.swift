@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 
+
 class MultiplicationStudyViewController: UIViewController {
     
     var multipleBy: Int?
@@ -33,12 +34,14 @@ class MultiplicationStudyViewController: UIViewController {
         //                synthesizer.speak(utterance)
         
         var multiplicationToSpeech = ""
-
-        let voices = AVSpeechSynthesisVoice.speechVoices()
         
-        let voiceSynth = AVSpeechSynthesizer()
-        
-        let voiceToUse = AVSpeechSynthesisVoice(identifier:"VOICEID:com.apple.speech.synthesis.voice.custom.siri.aaron.premium_1")
+    
+        // Ask to speak
+//        let voices = AVSpeechSynthesisVoice.speechVoices()
+//
+//        let voiceSynth = AVSpeechSynthesizer()
+//
+//        let voiceToUse = AVSpeechSynthesisVoice(identifier:"VOICEID:com.apple.speech.synthesis.voice.custom.siri.aaron.premium_1")
 //        AVSpeechSynthesisVoice(identifier:"com.apple.ttsbundle.siri_female_en-US_compact")
         //com.apple.ttsbundle.siri_female_en-US_compact
 //        for voice in voices {
@@ -48,15 +51,15 @@ class MultiplicationStudyViewController: UIViewController {
 //            }
         
         func sayThis(_ phrase: String){
-            let utterance = AVSpeechUtterance(string: phrase)
-            utterance.voice = voiceToUse
+//            let utterance = AVSpeechUtterance(string: phrase)
+//            utterance.voice = voiceToUse
 //            utterance.rate = 0.38
 //            utterance.postUtteranceDelay = 4
 //            utterance.pitchMultiplier = 1.52
             
 //            voiceSynth.mixToTelephonyUplink = true
             
-            voiceSynth.speak(utterance)
+//            voiceSynth.speak(utterance)
         }
         
         
