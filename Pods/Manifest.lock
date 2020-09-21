@@ -1,4 +1,5 @@
 PODS:
+  - SAConfettiView (0.1.8)
   - Sketch (3.0)
   - TensorFlowLiteC (2.3.0):
     - TensorFlowLiteC/Core (= 2.3.0)
@@ -9,20 +10,23 @@ PODS:
     - TensorFlowLiteC (= 2.3.0)
 
 DEPENDENCIES:
+  - SAConfettiView
   - Sketch
   - TensorFlowLiteSwift
 
 SPEC REPOS:
   trunk:
+    - SAConfettiView
     - Sketch
     - TensorFlowLiteC
     - TensorFlowLiteSwift
 
 SPEC CHECKSUMS:
+  SAConfettiView: c87031a2280659261b730fce3669fb10e73636ee
   Sketch: 49a4b71f7bc77316ed5f75ee79dedaa2b844d5e7
   TensorFlowLiteC: 51f50caf5777f740a70e2c1a5dbdc149e7aeb50b
   TensorFlowLiteSwift: fb152cc1eec36b25b03a23c07f5d58113170af58
 
-PODFILE CHECKSUM: d9d791a542909fb5702aa01956d9c045df2a811b
+PODFILE CHECKSUM: efcc842d6401182408f8e768b2789244462f6683
 
 COCOAPODS: 1.9.3

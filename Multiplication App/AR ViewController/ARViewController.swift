@@ -8,12 +8,16 @@
 
 import UIKit
 import ARKit
+import SAConfettiView
 
 class ARViewController: UIViewController,ARSCNViewDelegate {
 
     let arView = ARview()
     
     let config = ARWorldTrackingConfiguration()
+    
+    var confetti = SAConfettiView()
+
 
     var topNumber:Int?
     
@@ -30,14 +34,17 @@ class ARViewController: UIViewController,ARSCNViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isTranslucent = true
-        
         ARviewConstraints()
         arView.sceneView.delegate = self
-        arView.sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
+//        arView.sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
+        
         arView.sceneView.session.run(config)
+      
         
         topText.string = "   \(topNumber!)"
         bottomText.string = "x \(bottomNumber!)"
+        
+        self.correctAnswer = self.correctAnswerSolution(topInput: topNumber,bottomInput: bottomNumber)
         
         let vinculumText = SCNText(string: "___", extrusionDepth: 2)
         
@@ -51,17 +58,17 @@ class ARViewController: UIViewController,ARSCNViewDelegate {
         vinculumText.materials = [vinculumMaterial]
         
         let topNode = SCNNode()
-        topNode.position = SCNVector3(-0.2, 0.0,-0.8)
+        topNode.position = SCNVector3(-0.2, -0.2,-2)
         topNode.scale =  SCNVector3(0.03, 0.03, 0.03)
         topNode.geometry = topText
         
         let bottomNode = SCNNode()
-        bottomNode.position = SCNVector3(-0.2, -0.3,-0.8)
+        bottomNode.position = SCNVector3(-0.2, -0.5,-2)
         bottomNode.scale =  SCNVector3(0.03, 0.03, 0.03)
         bottomNode.geometry = bottomText
         
         let vinculumNode = SCNNode()
-        vinculumNode.position = SCNVector3(-0.2, -0.3,-0.8)
+        vinculumNode.position = SCNVector3(-0.2, -0.5,-2)
         vinculumNode.scale =  SCNVector3(0.03, 0.03, 0.03)
         vinculumNode.geometry = vinculumText
         
@@ -83,11 +90,19 @@ class ARViewController: UIViewController,ARSCNViewDelegate {
         arView.textField.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil);
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil);
+        
+        confetti = SAConfettiView(frame: view.bounds)
+        confetti.type = .Star
+        confetti.colors = [UIColor.red, UIColor.blue, UIColor.purple, UIColor.green]
+        confetti.intensity = 0.85
+        
+
     }
+    
       
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        self.view.frame.origin.y = -340
+        view.frame.origin.y = -340
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
@@ -102,26 +117,32 @@ class ARViewController: UIViewController,ARSCNViewDelegate {
                 return
             } else {
                 
-                self.correctAnswer = self.correctAnswerSolution(topInput: topNumber,bottomInput: bottomNumber)
-
+//                self.correctAnswer = self.correctAnswerSolution(topInput: topNumber,bottomInput: bottomNumber)
+                
+                print(correctAnswer)
                 
                 if Int(textFieldAnswer) == correctAnswer {
+                    view.addSubview(confetti)
+                    confetti.startConfetti()
                     displayBtn.title = "Correct !!!"
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
-                  ///Correct Response
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                         
-                      let topNumber = Int.random(in: 0...10)
-                      let bottomNumber = Int.random(in: 0...9)
+                        
+                        
+                  ///Correct Response
+                      let topNumber = Int.random(in: 0...9)
+                      let bottomNumber = Int.random(in: 0...10)
                         
                         self.topText.string = "   \(topNumber)"
                         self.bottomText.string = "x \(bottomNumber)"
-                        
                         self.correctAnswer = self.correctAnswerSolution(topInput: topNumber,bottomInput: bottomNumber)
-
+                        self.confetti.removeFromSuperview()
+                        self.confetti.stopConfetti()
+                        
                     }
                 } else {
                     
-                    displayBtn.title = "Good Try "
+                    displayBtn.title = "Good Try, Answer was \(correctAnswer)"
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
                   ///Correct Response
                         
@@ -131,6 +152,8 @@ class ARViewController: UIViewController,ARSCNViewDelegate {
                         self.topText.string = "   \(topNumber)"
                         self.bottomText.string = "x \(bottomNumber)"
                         
+                        self.displayBtn.title = ""
+
                         self.correctAnswer = self.correctAnswerSolution(topInput: topNumber,bottomInput: bottomNumber)
 
                     }

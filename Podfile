@@ -9,4 +9,5 @@ target 'Multiplication App' do
 
   pod 'Sketch'
   pod 'TensorFlowLiteSwift' 
+  pod 'SAConfettiView'
 end

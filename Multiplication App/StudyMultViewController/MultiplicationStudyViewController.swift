@@ -35,6 +35,19 @@ class MultiplicationStudyViewController: UIViewController {
         
         var multiplicationToSpeech = ""
         
+        let Voice = AVSpeechSynthesizer()
+        
+        let utterance = AVSpeechUtterance(string: "Welcome back. The database should still be up for you")
+                       utterance.voice = AVSpeechSynthesisVoice(identifier:" com.apple.speech.voice.Alex")
+//        com.apple.ttsbundle.siri_female_en-US_compact
+        let TilteSpeakingText1 = AVSpeechUtterance(string: "Welcome back. The database should still be up for you")
+//        Voice.voice = AVSpeechSynthesisVoice(identifier:"com.apple.ttsbundle.siri_female_en-US_compact")
+//        synthesizer.speak(utterance)
+        Voice.speak(utterance)
+                   TilteSpeakingText1.rate = 0.003
+                   TilteSpeakingText1.pitchMultiplier = 0.60
+                   TilteSpeakingText1.volume = 0.75
+                   TilteSpeakingText1.postUtteranceDelay = 0.01
     
         // Ask to speak
 //        let voices = AVSpeechSynthesisVoice.speechVoices()
