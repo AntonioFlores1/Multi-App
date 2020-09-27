@@ -12,7 +12,7 @@ class MultipleChoiceView: UIView {
     
     lazy var multipleChoiceCollectionView: UICollectionView = {
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+        layout.sectionInset = UIEdgeInsets(top: 50, left: 20, bottom: 10, right: 20)
         layout.itemSize = CGSize(width: 110, height: 105)
         let collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
         collectionView.register(CollectionViewCell.self, forCellWithReuseIdentifier: "collectionViewCell")

@@ -14,7 +14,6 @@ class StartViewController: UIViewController {
     
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
-    @IBOutlet weak var characterButton: UIButton!
     
     @IBOutlet weak var startButton: UIButton!
     
@@ -40,6 +39,11 @@ class StartViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        startButton.layer.borderColor = UIColor.black.cgColor
+        startButton.layer.borderWidth = 2
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = .clear
+        self.navigationController?.navigationBar.backgroundColor = .clear
 //        navigationController?.navigationBar.isHidden = true
 //        UIApplication.status
         CollectionViewSetUp()
@@ -57,12 +61,10 @@ class StartViewController: UIViewController {
         switch segmentedControlIndex {
         case 0:
             settingsButton.isHidden = false
-            characterButton.isHidden = false
             startButton.isHidden = false
             collectionView.isHidden = true
         case 1:
             settingsButton.isHidden = true
-            characterButton.isHidden = true
             startButton.isHidden = true
             collectionView.isHidden = false
             

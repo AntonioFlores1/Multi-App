@@ -95,7 +95,6 @@ class ARViewController: UIViewController,ARSCNViewDelegate {
         confetti.type = .Star
         confetti.colors = [UIColor.red, UIColor.blue, UIColor.purple, UIColor.green]
         confetti.intensity = 0.85
-        
 
     }
     

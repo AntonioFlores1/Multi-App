@@ -13,7 +13,7 @@ class CollectionViewCell: UICollectionViewCell {
     lazy var textLabel: UILabel = {
         var label = UILabel()
         label.font = UIFont(name: "AvenirNext-Bold", size: 18)
-        label.textColor = .white
+        label.textColor = .black
         label.textAlignment = .center
         return label
     }()

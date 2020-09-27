@@ -32,6 +32,10 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     var count = 0
     
+    var leftNumber: Int?
+    
+    var rightNumber: Int?
+    
     var reconginzedText = "" {
         didSet {
             if count == 0 {
@@ -66,13 +70,11 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     @IBOutlet weak var sketchView: SketchView!
     
     @IBOutlet weak var sketchView2: SketchView!
+
+    @IBOutlet weak var questionDisplayView: UIView!
     
-    @IBOutlet weak var topLabel: UILabel!
-    
-    @IBOutlet weak var bottomlabel: UILabel!
-    
-    @IBOutlet weak var vinculum: UILabel!
-    
+    @IBOutlet weak var questionLabel: UILabel!
+        
     @IBOutlet weak var eraserButton: UIButton!
     
     private var classifier: DigitClassifier?
@@ -87,6 +89,8 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        questionDisplayView.layer.cornerRadius = 24
         //        enterButton.isUserInteractionEnabled = false
         // Setup sketch view.
         sketchView.lineWidth = 30//30 .. 10
@@ -113,8 +117,6 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
         textFieldView.textField.addDoneButtonToKeyboard(myAction:  #selector(textFieldDonePressed))
         
         
-        
-        
         DigitClassifier.newInstance { result in
             switch result {
             case let .success(classifier):
@@ -126,8 +128,10 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
             }
         }
         
-        topLabel.text = Int.random(in: 0...10).description
-        bottomlabel.text = Int.random(in: 0...9).description
+        leftNumber = Int.random(in: 0...10)
+        rightNumber = Int.random(in: 0...9)
+        
+        questionLabel.text = "\(leftNumber!)  x  \(rightNumber!) ="
         
         dropButtonSetUp()
         
@@ -136,7 +140,7 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
         hideDrawingSetup()
         textFieldConstraints()
         hideTextSetup()
-        correctAnswer = correctAnswerSolution(topInput: topLabel.text, bottomInput: bottomlabel.text)
+        correctAnswer = correctAnswerSolution(topInput: leftNumber, bottomInput: rightNumber)
         
         
         let toolbar:UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0,  width: self.view.frame.size.width, height: 30))
@@ -152,7 +156,7 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     
     func initalCorrectAnswerSolution(topInput: Int?, bottomInput: Int?) {
-        correctAnswerSolution(topInput: topInput?.description, bottomInput: bottomInput?.description)
+        correctAnswerSolution(topInput: topInput, bottomInput: bottomInput)
     }
     
     func dropDownDisplay(tag: Int) {
@@ -180,8 +184,8 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
             ///Ar
             let ARviewcontroller = ARViewController()
             navigationController?.pushViewController(ARviewcontroller,animated: false)
-            ARviewcontroller.topNumber = Int(topLabel.text!)
-            ARviewcontroller.bottomNumber = Int(bottomlabel.text!)
+            ARviewcontroller.topNumber = leftNumber!
+            ARviewcontroller.bottomNumber = rightNumber!
                
             print("3")
         default:
@@ -190,7 +194,7 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     }
     
     
-    func correctAnswerSolution(topInput: String?,bottomInput: String?) -> Int{
+    func correctAnswerSolution(topInput: Int?,bottomInput: Int?) -> Int{
         var answer = 0
         guard let topInput = topInput, let bottomInput = bottomInput else {return 0}
         let expression = NSExpression(format: "\(topInput) * \(bottomInput)")
@@ -204,7 +208,7 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     
     
-    func MultiRandomQuestion(topInput: String?,bottomInput: String?) {
+    func MultiRandomQuestion(topInput: Int?,bottomInput: Int?) {
         guard let topInput = topInput, let bottomInput = bottomInput else {return}
         let expression = NSExpression(format: "\(topInput) * \(bottomInput)")
         if let result = expression.expressionValue(with: nil, context: nil) as? NSNumber {
@@ -234,7 +238,7 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
             return
         }
         count = 1
-        MultiRandomQuestion(topInput: topLabel.text, bottomInput: bottomlabel.text)
+        MultiRandomQuestion(topInput: leftNumber, bottomInput: rightNumber)
         sketchView.clear()
         sketchView2.clear()
     }
@@ -331,13 +335,14 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
             self.view.backgroundColor = .black
             self.sketchView.backgroundColor = .black
             self.sketchView2.backgroundColor = .black
-            self.topLabel.text = Int.random(in: 0...10).description
-            self.bottomlabel.text = Int.random(in: 0...9).description
+            self.leftNumber = Int.random(in: 0...10)
+            self.rightNumber = Int.random(in: 0...9)
+            self.questionLabel.text = "\(self.leftNumber!)  x  \(self.rightNumber!) ="
             self.enterButton.setTitle("", for: .normal)
-            self.correctAnswer = self.correctAnswerSolution(topInput: self.topLabel.text, bottomInput: self.bottomlabel.text)
+            self.correctAnswer = self.correctAnswerSolution(topInput: self.leftNumber, bottomInput: self.rightNumber)
         }
-        correctAnswer = correctAnswerSolution(topInput: topLabel.text, bottomInput: bottomlabel.text)
-        print(correctAnswerSolution(topInput: topLabel.text, bottomInput: bottomlabel.text))
+        correctAnswer = correctAnswerSolution(topInput: leftNumber, bottomInput: rightNumber)
+        print(correctAnswerSolution(topInput: leftNumber, bottomInput: rightNumber))
         
     }
     
@@ -347,9 +352,10 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
         enterButton.isHidden = false
 //        enterButton.isUserInteractionEnabled = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            self.topLabel.text = Int.random(in: 0...10).description
-            self.bottomlabel.text = Int.random(in: 0...9).description
-            self.correctAnswer = self.correctAnswerSolution(topInput: self.topLabel.text, bottomInput: self.bottomlabel.text)
+            self.leftNumber = Int.random(in: 0...10)
+            self.rightNumber = Int.random(in: 0...9)
+            self.questionLabel.text = "\(self.leftNumber!)  x  \(self.rightNumber!) ="
+            self.correctAnswer = self.correctAnswerSolution(topInput: self.leftNumber, bottomInput: self.rightNumber)
             self.enterButton.setTitle("", for: .normal)
         }
     }
@@ -357,14 +363,14 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     
     func initalCorrectAnswerSolution(topInput:Int? , bottomInput: Int?) -> Int {
-       return correctAnswerSolution(topInput: topInput?.description, bottomInput: bottomlabel.debugDescription)
+       return correctAnswerSolution(topInput: topInput, bottomInput: rightNumber)
     }
     
     
     func multiChoiceConstraints(){
         view.addSubview(multiChoiceView)
         multiChoiceView.translatesAutoresizingMaskIntoConstraints = false
-        multiChoiceView.topAnchor.constraint(equalTo: vinculum.bottomAnchor, constant: 8).isActive = true
+        multiChoiceView.topAnchor.constraint(equalTo: questionDisplayView.bottomAnchor, constant: 33).isActive = true
         multiChoiceView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14).isActive = true
         multiChoiceView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -14).isActive = true
         multiChoiceView.bottomAnchor.constraint(equalTo: enterButton.topAnchor, constant: 5).isActive = true
@@ -373,7 +379,7 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     func textFieldConstraints(){
         view.addSubview(textFieldView)
         textFieldView.translatesAutoresizingMaskIntoConstraints = false
-        textFieldView.topAnchor.constraint(equalTo: vinculum.bottomAnchor, constant: 0).isActive = true
+        textFieldView.topAnchor.constraint(equalTo: questionDisplayView.bottomAnchor, constant: 22).isActive = true
         textFieldView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14).isActive = true
         textFieldView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -14).isActive = true
         
@@ -388,11 +394,11 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
         button.setTitle("Menu", for: .normal)
         
         
-        button.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor,constant: 16).isActive = true
-        button.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 20).isActive = true
+        button.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor,constant: 10).isActive = true
+        button.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 10).isActive = true
         
-        button.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 95).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
         button.dropView.dropDownOptions = ["Multiple", "Text","Drawing","AR"]
         
@@ -566,7 +572,9 @@ extension MultiplicationViewController: UICollectionViewDataSource, UICollection
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let collectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionViewCell", for: indexPath) as? CollectionViewCell else {return UICollectionViewCell()}
         collectionViewCell.layer.borderColor = UIColor.white.cgColor
-        collectionViewCell.layer.borderWidth = 0.5
+        collectionViewCell.layer.borderWidth = 1
+        collectionViewCell.layer.cornerRadius = 20
+        collectionViewCell.backgroundColor = .white
         collectionViewCell.textLabel.text = multipleChoicesAnswers[indexPath.row].description
         return collectionViewCell
     }

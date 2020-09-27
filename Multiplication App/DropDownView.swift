@@ -62,15 +62,19 @@ class dropDownView: UIView, UITableViewDelegate,UITableViewDataSource {
         let cell = UITableViewCell()
         
         cell.textLabel?.text = dropDownOptions[indexPath.row]
-        
         cell.backgroundColor = .darkGray
         
         return cell
         
     }
+
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.delegate.dropDownChoice(string: dropDownOptions[indexPath.row], tag: indexPath.row)
         self.dropDownMenuDisplayProtocol.dropDownDisplay(tag: indexPath.row)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 35
     }
 }

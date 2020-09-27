@@ -137,7 +137,6 @@
 		A943920A24BA7F17006C0B13 /* Tensor Flow Extension */ = {
 			isa = PBXGroup;
 			children = (
-				A9584F9224B93BE500928EE1 /* StartViewController */,
 				A943920C24BA7F47006C0B13 /* TensorFlowExt.swift */,
 			);
 			path = "Tensor Flow Extension";
@@ -181,6 +180,7 @@
 		A9584F7124B13F9000928EE1 /* Multiplication App */ = {
 			isa = PBXGroup;
 			children = (
+				A9584F9224B93BE500928EE1 /* StartViewController */,
 				7F8C1286251487CF00E4FE93 /* AR ViewController */,
 				A956915E24BEA8E20095B2EE /* DropDown Menu */,
 				A943920F24BAA7EB006C0B13 /* mnist.tflite */,
