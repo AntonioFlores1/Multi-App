@@ -26,7 +26,7 @@ class MultiplicationStudyViewController: UIViewController {
 
     var table = [String]()
     
-    
+    @IBOutlet weak var speakerButton: UIButton!
     
     @IBOutlet var multiplicationButton: [UIButton]!
     
@@ -130,6 +130,9 @@ class MultiplicationStudyViewController: UIViewController {
     
     
     @IBAction func buttonSelection(_ sender: UIButton) {
+        speakerButton.setImage(UIImage.init(systemName: "speaker.slash"), for: .normal)
+        speakerButton.tintColor = .systemRed
+        
         voiceSynth.stopSpeaking(at: .immediate)
         print(sender.currentTitle)
         let iteration = singleProblemTextToSpeech(problem: sender.currentTitle!)

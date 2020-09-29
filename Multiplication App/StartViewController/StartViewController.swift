@@ -37,8 +37,8 @@ class StartViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        startButton.layer.borderColor = UIColor.black.cgColor
-        startButton.layer.borderWidth = 2
+//        startButton.layer.borderColor = UIColor.black.cgColor
+//        startButton.layer.borderWidth = 2
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
         self.navigationController?.navigationBar.backgroundColor = .clear

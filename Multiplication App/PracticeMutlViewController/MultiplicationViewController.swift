@@ -339,6 +339,8 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     func correctAnswerDisplay(){
         enterButton.setTitle("Correct!! Great Job", for: .normal)
+        multiChoiceView.multipleChoiceCollectionView.isUserInteractionEnabled = false
+        enterButton.isEnabled = false
         view.backgroundColor = .systemGreen
         questionDisplayView.addSubview(confetti)
         confetti.startConfetti()
@@ -354,6 +356,9 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
             self.enterButton.setTitle("", for: .normal)
             self.correctAnswer = self.correctAnswerSolution(topInput: self.leftNumber, bottomInput: self.rightNumber)
             self.confetti.removeFromSuperview()
+            self.multiChoiceView.multipleChoiceCollectionView.isUserInteractionEnabled = true
+            self.enterButton.isEnabled = true
+
         }
         correctAnswer = correctAnswerSolution(topInput: leftNumber, bottomInput: rightNumber)
         print(correctAnswerSolution(topInput: leftNumber, bottomInput: rightNumber))
@@ -361,6 +366,8 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     }
     
     func wrongAnswerDisplay(){
+        multiChoiceView.multipleChoiceCollectionView.isUserInteractionEnabled = false
+        enterButton.isEnabled = false
         
         enterButton.setTitle("Good Try, Correct answer is \(self.correctAnswer!)", for: .normal)
         enterButton.isHidden = false
@@ -371,6 +378,8 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
             self.questionLabel.text = "\(self.leftNumber!)  x  \(self.rightNumber!) ="
             self.correctAnswer = self.correctAnswerSolution(topInput: self.leftNumber, bottomInput: self.rightNumber)
             self.enterButton.setTitle("", for: .normal)
+            self.multiChoiceView.multipleChoiceCollectionView.isUserInteractionEnabled = true
+            self.enterButton.isEnabled = true
         }
     }
     

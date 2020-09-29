@@ -67,7 +67,6 @@ class TransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         containerView.bringSubviewToFront(detailView)
 
         if presenting {
-            //update opening animation
             UIView.animate(withDuration: durationExpanding, delay:0.0,
                            usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, //gives it some bounce to make the transition look neater than if you have defaults
                 animations: {
@@ -80,8 +79,7 @@ class TransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
                 }
             )
         } else {
-            print("in")
-            //update closing animation
+
             UIView.animate(withDuration: durationClosing, delay:0.0, options: .curveLinear,
                    animations: {
                     

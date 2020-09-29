@@ -29,7 +29,6 @@ class ARview: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .red
         ARSCNConstriants()
         textFieldConstraints()
 

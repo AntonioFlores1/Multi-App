@@ -92,7 +92,7 @@ class ARViewController: UIViewController,ARSCNViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil);
         
         confetti = SAConfettiView(frame: view.bounds)
-        confetti.type = .Star
+        confetti.type = .Confetti
         confetti.colors = [UIColor.red, UIColor.blue, UIColor.purple, UIColor.green]
         confetti.intensity = 0.85
 
