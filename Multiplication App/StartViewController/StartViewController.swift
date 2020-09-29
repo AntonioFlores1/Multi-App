@@ -16,9 +16,7 @@ class StartViewController: UIViewController {
     
     
     @IBOutlet weak var startButton: UIButton!
-    
-    let transition = TransitionAnimator()
-    
+        
     var selectedCell = UICollectionViewCell()
     
     lazy var collectionView:UICollectionView = {
@@ -44,8 +42,6 @@ class StartViewController: UIViewController {
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
         self.navigationController?.navigationBar.backgroundColor = .clear
-//        navigationController?.navigationBar.isHidden = true
-//        UIApplication.status
         CollectionViewSetUp()
         collectionView.isHidden = true
         collectionView.dataSource = self
@@ -111,7 +107,6 @@ extension StartViewController: UICollectionViewDataSource {
         CollectionViewCell.textLabel.text = multiplicationOf[indexPath.row]
         CollectionViewCell.layer.masksToBounds = true
         CollectionViewCell.layer.cornerRadius = 8
-        //        CollectionViewCell.layer.shadowColor = CGColor(UIColor.gray as! CGColorSpace)
         CollectionViewCell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
         CollectionViewCell.layer.shadowRadius = 5.0
         CollectionViewCell.layer.shadowOpacity = 3.0
@@ -132,34 +127,8 @@ extension StartViewController: UICollectionViewDelegate {
         let pokemonDetailViewController = storyboard!.instantiateViewController(withIdentifier: "DetailViewController") as! MultiplicationStudyViewController
         
         pokemonDetailViewController.multipleBy = selectedCell.tag
-        pokemonDetailViewController.transitioningDelegate = self
-        present(pokemonDetailViewController, animated: true, completion: nil)
+        navigationController?.present(pokemonDetailViewController, animated: true, completion: nil)
     }
-}
-extension StartViewController: UIViewControllerTransitioningDelegate {
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        guard let originFrame = selectedCell.superview?.convert(selectedCell.frame, to: nil) else {
-            return transition
-        }
-        
-        transition.originFrame = originFrame
-        transition.presenting = true
-        
-        return transition
-    }
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
-        guard let originFrame = selectedCell.superview?.convert(selectedCell.frame, to: nil) else {
-                   return transition
-               }
-               
-        transition.presenting = false
-
-
-
-        return transition
-    }
-    
 }
 
 

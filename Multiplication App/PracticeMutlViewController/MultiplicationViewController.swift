@@ -10,6 +10,7 @@ import UIKit
 import VisionKit
 import Vision
 import Sketch
+import SAConfettiView
 
 protocol dropMenuDisplayProtocol {
     func dropDownDisplay(tag:Int)
@@ -29,6 +30,10 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     var textFieldView = TextChoiceView()
         
     var multipleChoicesAnswers = [Int]()
+    
+    var confetti = SAConfettiView()
+
+    let defaultColor = UIColor.init(displayP3Red: 221/255, green: 215/255, blue: 141/255, alpha: 1)
     
     var count = 0
     
@@ -89,10 +94,10 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        questionDisplayView.layer.cornerRadius = 24
-        //        enterButton.isUserInteractionEnabled = false
-        // Setup sketch view.
+        questionDisplayView.layer.cornerRadius = 46
+        questionDisplayView.clipsToBounds = false
+        questionDisplayView.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMinXMaxYCorner]
+
         sketchView.lineWidth = 30//30 .. 10
         sketchView.backgroundColor = UIColor.black
         sketchView.lineColor = UIColor.white
@@ -151,6 +156,12 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
         toolbar.sizeToFit()
         //setting toolbar as inputAccessoryView
         self.textFieldView.textField.inputAccessoryView = toolbar
+        
+        confetti = SAConfettiView(frame: questionDisplayView.bounds)
+        confetti.type = .Confetti
+        confetti.colors = [UIColor.red, UIColor.blue, UIColor.purple, UIColor.green,UIColor.yellow]
+        confetti.intensity = 0.75
+        
     }
     
     
@@ -329,10 +340,12 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     func correctAnswerDisplay(){
         enterButton.setTitle("Correct!! Great Job", for: .normal)
         view.backgroundColor = .systemGreen
+        questionDisplayView.addSubview(confetti)
+        confetti.startConfetti()
         sketchView.backgroundColor = UIColor.systemGreen
         sketchView2.backgroundColor = UIColor.systemGreen
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
-            self.view.backgroundColor = .black
+            self.view.backgroundColor = self.defaultColor
             self.sketchView.backgroundColor = .black
             self.sketchView2.backgroundColor = .black
             self.leftNumber = Int.random(in: 0...10)
@@ -340,6 +353,7 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
             self.questionLabel.text = "\(self.leftNumber!)  x  \(self.rightNumber!) ="
             self.enterButton.setTitle("", for: .normal)
             self.correctAnswer = self.correctAnswerSolution(topInput: self.leftNumber, bottomInput: self.rightNumber)
+            self.confetti.removeFromSuperview()
         }
         correctAnswer = correctAnswerSolution(topInput: leftNumber, bottomInput: rightNumber)
         print(correctAnswerSolution(topInput: leftNumber, bottomInput: rightNumber))
@@ -574,7 +588,10 @@ extension MultiplicationViewController: UICollectionViewDataSource, UICollection
         collectionViewCell.layer.borderColor = UIColor.white.cgColor
         collectionViewCell.layer.borderWidth = 1
         collectionViewCell.layer.cornerRadius = 20
-        collectionViewCell.backgroundColor = .white
+        collectionViewCell.backgroundColor = UIColor.init(displayP3Red: 221/255, green: 215/255, blue: 141/255, alpha: 1)
+//            UIColor.init(displayP3Red: 244/255, green: 209/255, blue: 174/255, alpha: 1)
+//            377771
+//        rgb(119, 91, 89)
         collectionViewCell.textLabel.text = multipleChoicesAnswers[indexPath.row].description
         return collectionViewCell
     }
