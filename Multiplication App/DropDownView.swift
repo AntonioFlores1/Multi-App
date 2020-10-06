@@ -20,7 +20,7 @@ class dropDownView: UIView, UITableViewDelegate,UITableViewDataSource {
     
     var delegate: dropDownProtocol!
     
-    var dropDownMenuDisplayProtocol: dropMenuDisplayProtocol!
+    var dropDownMenuDisplayProtocol: DropMenuDisplayProtocol!
     
      
     override init(frame: CGRect) {

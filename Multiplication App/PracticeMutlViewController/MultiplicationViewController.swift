@@ -11,13 +11,16 @@ import VisionKit
 import Vision
 import Sketch
 import SAConfettiView
+import AVFoundation
 
-protocol dropMenuDisplayProtocol {
+protocol DropMenuDisplayProtocol {
     func dropDownDisplay(tag:Int)
 }
 
 
-class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
+class MultiplicationViewController: UIViewController,DropMenuDisplayProtocol,QuestionUpdateProtocol {
+    
+    
     
     var textRecognitionRequest = VNRecognizeTextRequest()
     
@@ -33,8 +36,8 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     var confetti = SAConfettiView()
 
-    let defaultColor = UIColor.init(displayP3Red: 221/255, green: 215/255, blue: 141/255, alpha: 1)
-    
+    let defaultColor = UIColor.init(displayP3Red: 252/255, green: 216/255, blue: 184/255, alpha: 1)
+
     var count = 0
     
     var leftNumber: Int?
@@ -162,9 +165,28 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
         confetti.colors = [UIColor.red, UIColor.blue, UIColor.purple, UIColor.green,UIColor.yellow]
         confetti.intensity = 0.75
         
+
+        
     }
     
-    
+    func updateQuestion(leftInput: Int?, rightInput: Int?) {
+        
+        print(leftInput)
+        
+        questionLabel.text = "\(leftInput!)  x  \(rightInput!) ="
+                
+        guard let newLeftInput = leftInput, let newRightInput = rightInput else { fatalError() }
+        
+        print("here")
+        
+//        questionLabel.text = "\(newLeftInput)  x  \(newRightInput) ="
+        
+        leftNumber = leftInput!
+        rightNumber = rightInput!
+        
+        correctAnswer = correctAnswerSolution(topInput: leftNumber, bottomInput: rightNumber)
+        
+    }
     
     func initalCorrectAnswerSolution(topInput: Int?, bottomInput: Int?) {
         correctAnswerSolution(topInput: topInput, bottomInput: bottomInput)
@@ -195,8 +217,9 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
             ///Ar
             let ARviewcontroller = ARViewController()
             navigationController?.pushViewController(ARviewcontroller,animated: false)
-            ARviewcontroller.topNumber = leftNumber!
-            ARviewcontroller.bottomNumber = rightNumber!
+            ARviewcontroller.delegate = self
+            ARviewcontroller.topleftNumber = leftNumber!
+            ARviewcontroller.bottomrightNumber = rightNumber!
                
             print("3")
         default:
@@ -214,6 +237,8 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
         } else {
             enterButton.setTitle("Error Calculating Contact support", for: .normal)
         }
+        print("hi")
+        print(answer)
         return answer
     }
     
@@ -338,6 +363,7 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     
     
     func correctAnswerDisplay(){
+        AudioServicesPlaySystemSound(SystemSoundID(1107))
         enterButton.setTitle("Correct!! Great Job", for: .normal)
         multiChoiceView.multipleChoiceCollectionView.isUserInteractionEnabled = false
         enterButton.isEnabled = false
@@ -368,7 +394,7 @@ class MultiplicationViewController: UIViewController,dropMenuDisplayProtocol {
     func wrongAnswerDisplay(){
         multiChoiceView.multipleChoiceCollectionView.isUserInteractionEnabled = false
         enterButton.isEnabled = false
-        
+        AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
         enterButton.setTitle("Good Try, Correct answer is \(self.correctAnswer!)", for: .normal)
         enterButton.isHidden = false
 //        enterButton.isUserInteractionEnabled = false

@@ -10,18 +10,23 @@ import UIKit
 import ARKit
 import SAConfettiView
 
+protocol QuestionUpdateProtocol {
+    func updateQuestion(leftInput:Int?,rightInput:Int?)
+}
+
 class ARViewController: UIViewController,ARSCNViewDelegate {
 
+    var delegate: QuestionUpdateProtocol!
+    
     let arView = ARview()
     
     let config = ARWorldTrackingConfiguration()
     
     var confetti = SAConfettiView()
 
-
-    var topNumber:Int?
+    var topleftNumber:Int?
     
-    var bottomNumber: Int?
+    var bottomrightNumber: Int?
     
     let displayBtn: UIBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: Selector("Pressed"))
     
@@ -30,6 +35,16 @@ class ARViewController: UIViewController,ARSCNViewDelegate {
     var bottomText = SCNText(string: "", extrusionDepth: 2)
     
     var correctAnswer = 0
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        if self.isMovingFromParent {
+            delegate?.updateQuestion(leftInput: topleftNumber, rightInput: bottomrightNumber)
+            print("I do action")
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,10 +56,10 @@ class ARViewController: UIViewController,ARSCNViewDelegate {
         arView.sceneView.session.run(config)
       
         
-        topText.string = "   \(topNumber!)"
-        bottomText.string = "x \(bottomNumber!)"
+        topText.string = "   \(topleftNumber!)"
+        bottomText.string = "x \(bottomrightNumber!)"
         
-        self.correctAnswer = self.correctAnswerSolution(topInput: topNumber,bottomInput: bottomNumber)
+        self.correctAnswer = self.correctAnswerSolution(topInput: topleftNumber,bottomInput: bottomrightNumber)
         
         let vinculumText = SCNText(string: "___", extrusionDepth: 2)
         
@@ -96,6 +111,7 @@ class ARViewController: UIViewController,ARSCNViewDelegate {
         confetti.colors = [UIColor.red, UIColor.blue, UIColor.purple, UIColor.green]
         confetti.intensity = 0.85
 
+        print(correctAnswer)
     }
     
       
@@ -124,14 +140,15 @@ class ARViewController: UIViewController,ARSCNViewDelegate {
                     view.addSubview(confetti)
                     confetti.startConfetti()
                     displayBtn.title = "Correct !!!"
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [self] in
                         
                         
                         
                   ///Correct Response
                       let topNumber = Int.random(in: 0...9)
                       let bottomNumber = Int.random(in: 0...10)
-                        
+                        self.topleftNumber = topNumber
+                        self.bottomrightNumber = bottomNumber
                         self.topText.string = "   \(topNumber)"
                         self.bottomText.string = "x \(bottomNumber)"
                         self.correctAnswer = self.correctAnswerSolution(topInput: topNumber,bottomInput: bottomNumber)
@@ -148,6 +165,8 @@ class ARViewController: UIViewController,ARSCNViewDelegate {
                       let topNumber = Int.random(in: 0...10)
                       let bottomNumber = Int.random(in: 0...9)
                         
+                        self.topleftNumber = topNumber
+                        self.bottomrightNumber = bottomNumber
                         self.topText.string = "   \(topNumber)"
                         self.bottomText.string = "x \(bottomNumber)"
                         
@@ -192,6 +211,8 @@ class ARViewController: UIViewController,ARSCNViewDelegate {
         } else {
             displayBtn.title = "Error Calculating Contact support"
         }
+        print("its")
+        print(answer)
         return answer
     }
     
