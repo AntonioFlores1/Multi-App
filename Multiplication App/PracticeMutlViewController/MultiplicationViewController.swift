@@ -69,7 +69,7 @@ class MultiplicationViewController: UIViewController,DropMenuDisplayProtocol,Que
             multipleChoicesAnswers = multiChoiceAnswerSetup(answer: correctAnswer)
         }
     }
-    
+
     
     var SampleImage = UIImage.init(named: "maxresdefault")!
     
@@ -364,12 +364,14 @@ class MultiplicationViewController: UIViewController,DropMenuDisplayProtocol,Que
     
     func correctAnswerDisplay(){
         AudioServicesPlaySystemSound(SystemSoundID(1107))
+        questionLabel.text = "\(leftNumber!)  x  \(rightNumber!) = \(correctAnswer!)"
         enterButton.setTitle("Correct!! Great Job", for: .normal)
         multiChoiceView.multipleChoiceCollectionView.isUserInteractionEnabled = false
         enterButton.isEnabled = false
-        view.backgroundColor = .systemGreen
         questionDisplayView.addSubview(confetti)
         confetti.startConfetti()
+        
+        view.backgroundColor = .systemGreen
         sketchView.backgroundColor = UIColor.systemGreen
         sketchView2.backgroundColor = UIColor.systemGreen
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
@@ -395,6 +397,7 @@ class MultiplicationViewController: UIViewController,DropMenuDisplayProtocol,Que
         multiChoiceView.multipleChoiceCollectionView.isUserInteractionEnabled = false
         enterButton.isEnabled = false
         AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+        questionLabel.text = "\(leftNumber!)  x  \(rightNumber!) = \(correctAnswer!)"
         enterButton.setTitle("Good Try, Correct answer is \(self.correctAnswer!)", for: .normal)
         enterButton.isHidden = false
 //        enterButton.isUserInteractionEnabled = false
@@ -624,6 +627,13 @@ extension MultiplicationViewController: UICollectionViewDataSource, UICollection
         collectionViewCell.layer.borderWidth = 1
         collectionViewCell.layer.cornerRadius = 20
         collectionViewCell.backgroundColor = UIColor.init(displayP3Red: 221/255, green: 215/255, blue: 141/255, alpha: 1)
+        collectionViewCell.layer.shadowColor = UIColor.init(displayP3Red: 240/255, green: 215/255, blue: 141/255, alpha: 1).cgColor
+//            UIColor.black.cgColor
+        collectionViewCell.layer.shadowOffset =  CGSize(width: 0, height: 3)
+        collectionViewCell.layer.shadowOpacity = 5
+        collectionViewCell.layer.shadowRadius = 1.0
+        collectionViewCell.clipsToBounds = false
+        collectionViewCell.layer.masksToBounds = false
 //            UIColor.init(displayP3Red: 244/255, green: 209/255, blue: 174/255, alpha: 1)
 //            377771
 //        rgb(119, 91, 89)
@@ -633,6 +643,7 @@ extension MultiplicationViewController: UICollectionViewDataSource, UICollection
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
         print("User tapped on item \(multipleChoicesAnswers[indexPath.row])")
+        collectionView.cellForItem(at: indexPath)?.backgroundColor = .red
         if correctAnswer ?? 0 == multipleChoicesAnswers[indexPath.row] {
             correctAnswerDisplay()
         } else {
